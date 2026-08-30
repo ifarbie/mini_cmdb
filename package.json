@@ -1,0 +1,18 @@
+{
+  "name": "mini_cmdb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend": "npm run dev --prefix frontend",
+    "backend": "cd backend && mvnw.cmd spring-boot:run",
+    "dev-old": "concurrently \"npm run frontend\" \"npm run backend\"",
+    "dev": "start \"Frontend\" cmd /k \"cd frontend && npm run dev\" && start \"Backend\" cmd /k \"cd backend && mvnw.cmd spring-boot:run\""
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
