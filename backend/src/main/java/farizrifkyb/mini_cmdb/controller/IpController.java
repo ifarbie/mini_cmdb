@@ -1,0 +1,52 @@
+package farizrifkyb.mini_cmdb.controller;
+
+import java.util.List;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import farizrifkyb.mini_cmdb.entity.Ip;
+import farizrifkyb.mini_cmdb.model.request.IpRequest;
+import farizrifkyb.mini_cmdb.model.response.IpResponse;
+import farizrifkyb.mini_cmdb.model.response.WebResponse;
+import farizrifkyb.mini_cmdb.service.IpService;
+import jakarta.validation.Valid;
+
+@RestController
+public class IpController {
+
+    private final IpService ipService;
+
+    public IpController(IpService ipService) {
+        this.ipService = ipService;
+    }
+
+    @PostMapping(path = "/api/ips", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<IpResponse> createIp(@RequestBody @Valid IpRequest req) {
+        return WebResponse.<IpResponse>builder().data(ipService.createIp(req)).build();
+    }
+
+    @GetMapping(path = "/api/ips", produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<List<Ip>> getAllIps() {
+        List<Ip> listIps = ipService.getAllIps();
+        return WebResponse.<List<Ip>>builder().data(listIps).build();
+    }
+
+    @PutMapping(path = "/api/ips/{ip_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<Ip> updateIp(@PathVariable("ip_id") Long IpId,
+            @RequestBody @Valid IpRequest req) {
+        return WebResponse.<Ip>builder().data(ipService.updateIp(IpId, req)).build();
+    }
+
+    @DeleteMapping(path = "/api/ips/{ip_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<String> deleteIp(@PathVariable("ip_id") Long ipId) {
+        String response = ipService.deleteIp(ipId);
+        return WebResponse.<String>builder().data(response).build();
+    }
+}
