@@ -3,11 +3,11 @@ import { Link } from 'react-router';
 type PageHeaderProps = {
   title: string;
   description: string;
-  addDataButton?: string;
+  buttonText?: string;
   to?: string;
 };
 
-const PageHeader = ({ title, description, addDataButton, to }: PageHeaderProps) => {
+const PageHeader = ({ title, description, buttonText, to }: PageHeaderProps) => {
   return (
     <div className='mb-8 flex items-center justify-between'>
       <div>
@@ -16,9 +16,9 @@ const PageHeader = ({ title, description, addDataButton, to }: PageHeaderProps) 
         <p className='mt-2 text-sm text-gray-500'>{description}</p>
       </div>
 
-      {addDataButton && to && (
+      {buttonText && to && (
         <Link to={to} className='rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800'>
-          {addDataButton}
+          {buttonText}
         </Link>
       )}
     </div>

@@ -1,5 +1,5 @@
 import ApplicationTable from './ApplicationTable';
-import ApplicationHeader from './ApplicationHeader';
+import PageHeader from '../ui/PageHeader';
 
 type ApplicationMainProps = {
   applications: any[];
@@ -9,10 +9,10 @@ export default function ApplicationMain({ applications }: ApplicationMainProps) 
   return (
     <main className='flex-1 bg-gray-50 p-8 text-gray-900'>
       {/* Header */}
-      <ApplicationHeader />
+      <PageHeader title="Applications" description="Manage all applications in CMDB" to='/applications/new' buttonText='+ Add Application' />
 
-      {/* Search & Filter */}
-      <div className='mb-6 flex gap-3'>
+      {/* TODO: Search & Filter */}
+      {/* <div className='mb-6 flex gap-3'>
         <input type='text' placeholder='Search application...' className='w-full max-w-md rounded-lg border bg-white px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-300' />
 
         <select className='rounded-lg border bg-white px-4 py-2 text-sm'>
@@ -26,7 +26,7 @@ export default function ApplicationMain({ applications }: ApplicationMainProps) 
           <option value='GOOD'>Good</option>
           <option value='WARNING'>Warning</option>
         </select>
-      </div>
+      </div> */}
 
       {/* Table */}
       <ApplicationTable applications={applications} />

@@ -1,6 +1,6 @@
 import { Link, useFetcher } from 'react-router';
 import BackToButton from '~/components/ui/BackToButton';
-import ApplicationFormHeader from './ApplicationFormHeader';
+import PageHeader from '~/components/ui/PageHeader';
 
 const ApplicationFormMain = () => {
   const fetcher = useFetcher();
@@ -9,7 +9,7 @@ const ApplicationFormMain = () => {
     <main className='flex-1 bg-gray-50 p-8 text-gray-900'>
       <BackToButton to='/applications'>Applications</BackToButton>
 
-      <ApplicationFormHeader />
+      <PageHeader title='Add Application' description='Create a new application in CMDB.' />
 
       <fetcher.Form method='post' className='max-w-3xl rounded-xl border bg-white p-6'>
         {/* Name */}
