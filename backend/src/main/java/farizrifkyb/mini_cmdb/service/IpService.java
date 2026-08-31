@@ -20,6 +20,10 @@ public class IpService {
         return ipRepository.findAll();
     }
 
+    public Ip getIpById(Long id) {
+        return ipRepository.findById(id).orElseThrow(() -> new RuntimeException("Ip not found"));
+    }
+
     public IpResponse createIp(IpRequest req) {
         Ip newIp = new Ip();
 

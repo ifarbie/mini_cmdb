@@ -16,67 +16,88 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ApplicationGroupService {
-    private final ApplicationGroupRepository applicationGroupRepository;
-    private final ApplicationRepository applicationRepository;
+        private final ApplicationGroupRepository applicationGroupRepository;
+        private final ApplicationRepository applicationRepository;
 
-    public ApplicationGroup createApplicationGroup(Long applicationId, ApplicationGroupRequest req) {
-        Application application = applicationRepository.findById(applicationId)
-                .orElseThrow(() -> new RuntimeException("Application not found"));
+        public ApplicationGroup createApplicationGroup(Long applicationId, ApplicationGroupRequest req) {
+                Application application = applicationRepository.findById(applicationId)
+                                .orElseThrow(() -> new RuntimeException("Application not found"));
 
-        ApplicationGroup group = new ApplicationGroup();
+                ApplicationGroup group = new ApplicationGroup();
 
-        group.setName(req.getName());
-        group.setDescription(req.getDescription());
-        group.setApplication(application);
+                group.setName(req.getName());
+                group.setDescription(req.getDescription());
+                group.setApplication(application);
 
-        applicationGroupRepository.save(group);
+                applicationGroupRepository.save(group);
 
-        return group;
-    }
+                return group;
+        }
 
-    public List<ApplicationGroupResponse> getApplicationGroups() {
-        return applicationGroupRepository.findAll()
-                .stream()
-                .map(group -> new ApplicationGroupResponse(
-                        group.getId(),
-                        group.getName(),
-                        group.getDescription(),
-                        new ApplicationResponse(
-                                group.getApplication().getId(),
-                                group.getApplication().getName(),
-                                group.getApplication().getStatus(),
-                                group.getApplication().getDescription(),
-                                group.getApplication().getEnvironment())))
-                .toList();
-    }
+        public List<ApplicationGroupResponse> getApplicationGroups() {
+                return applicationGroupRepository.findAll()
+                                .stream()
+                                .map(group -> new ApplicationGroupResponse(
+                                                group.getId(),
+                                                group.getName(),
+                                                group.getDescription(),
+                                                new ApplicationResponse(
+                                                                group.getApplication().getId(),
+                                                                group.getApplication().getName(),
+                                                                group.getApplication().getStatus(),
+                                                                group.getApplication().getDescription(),
+                                                                group.getApplication().getEnvironment()),
+                                                group.getIps()))
+                                .toList();
+        }
 
-    public ApplicationGroupResponse updateApplicationGroup(Long groupId, ApplicationGroupRequest req) {
-        ApplicationGroup group = applicationGroupRepository.findById(groupId)
-                .orElseThrow(() -> new RuntimeException("Application Group not found"));
+        public ApplicationGroupResponse getApplicationGroupById(Long groupId) {
+                ApplicationGroup group = applicationGroupRepository.findById(groupId)
+                                .orElseThrow(() -> new RuntimeException("Application Group not found"));
 
-        group.setName(req.getName());
-        group.setDescription(req.getDescription());
+                return new ApplicationGroupResponse(
+                                group.getId(),
+                                group.getName(),
+                                group.getDescription(),
+                                new ApplicationResponse(
+                                                group.getApplication().getId(),
+                                                group.getApplication().getName(),
+                                                group.getApplication().getStatus(),
+                                                group.getApplication().getDescription(),
+                                                group.getApplication().getEnvironment()),
+                                group.getIps()
 
-        applicationGroupRepository.save(group);
+                );
+        }
 
-        return new ApplicationGroupResponse(
-                group.getId(),
-                group.getName(),
-                group.getDescription(),
-                new ApplicationResponse(
-                        group.getApplication().getId(),
-                        group.getApplication().getName(),
-                        group.getApplication().getStatus(),
-                        group.getApplication().getDescription(),
-                        group.getApplication().getEnvironment()));
-    }
+        public ApplicationGroupResponse updateApplicationGroup(Long groupId, ApplicationGroupRequest req) {
+                ApplicationGroup group = applicationGroupRepository.findById(groupId)
+                                .orElseThrow(() -> new RuntimeException("Application Group not found"));
 
-    public String deleteApplicationGroup(Long groupId) {
-        ApplicationGroup applicationGroup = applicationGroupRepository.findById(groupId)
-                .orElseThrow(() -> new RuntimeException("Application Group not found"));
+                group.setName(req.getName());
+                group.setDescription(req.getDescription());
 
-        applicationGroupRepository.delete(applicationGroup);
+                applicationGroupRepository.save(group);
 
-        return "Berhasil menghapus data";
-    }
+                return new ApplicationGroupResponse(
+                                group.getId(),
+                                group.getName(),
+                                group.getDescription(),
+                                new ApplicationResponse(
+                                                group.getApplication().getId(),
+                                                group.getApplication().getName(),
+                                                group.getApplication().getStatus(),
+                                                group.getApplication().getDescription(),
+                                                group.getApplication().getEnvironment()),
+                                group.getIps());
+        }
+
+        public String deleteApplicationGroup(Long groupId) {
+                ApplicationGroup applicationGroup = applicationGroupRepository.findById(groupId)
+                                .orElseThrow(() -> new RuntimeException("Application Group not found"));
+
+                applicationGroupRepository.delete(applicationGroup);
+
+                return "Berhasil menghapus data";
+        }
 }

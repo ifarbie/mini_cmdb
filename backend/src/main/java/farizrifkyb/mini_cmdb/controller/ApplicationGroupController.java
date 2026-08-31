@@ -39,6 +39,12 @@ public class ApplicationGroupController {
         return WebResponse.<List<ApplicationGroupResponse>>builder().data(listApplicationGroups).build();
     }
 
+    @GetMapping(path = "/api/applications/groups/{group_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<ApplicationGroupResponse> getApplicationGroupById(@PathVariable("group_id") Long groupId) {
+        ApplicationGroupResponse applicationGroup = applicationGroupService.getApplicationGroupById(groupId);
+        return WebResponse.<ApplicationGroupResponse>builder().data(applicationGroup).build();
+    }
+
     @PutMapping(path = "/api/applications/groups/{group_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<ApplicationGroupResponse> updateApplicationGroup(@PathVariable("group_id") Long groupId, @RequestBody @Valid ApplicationGroupRequest req) {
         ApplicationGroupResponse updatedApplicationGroup = applicationGroupService.updateApplicationGroup(groupId, req);

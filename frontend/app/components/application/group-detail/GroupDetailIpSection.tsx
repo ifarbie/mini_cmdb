@@ -1,45 +1,54 @@
-import { Link } from 'react-router';
+import { useFetcher } from 'react-router';
 
-import type { ApplicationGroup } from '~/types/ApplicationGroup';
+import type { Ip } from '~/types/Ip';
 
-type ApplicationDetailGroupsProps = {
-  handleOpenAddGroup: () => void;
-  groups: ApplicationGroup[];
+type GroupDetailIpSectionProps = {
+  setIsAddIpOpen: (isTrue: boolean) => void;
+  handleRemoveIp: (ipId: number) => void;
+  groupId: string | number | undefined;
+  ips: Ip[];
 };
 
-const ApplicationDetailGroups = ({
-  handleOpenAddGroup,
-  groups,
-}: ApplicationDetailGroupsProps) => {
+type FetcherResponse = {
+  success: boolean;
+};
+
+const GroupDetailIpSection = ({
+  groupId,
+  setIsAddIpOpen,
+  ips,
+}: GroupDetailIpSectionProps) => {
+  const removeIpFetcher = useFetcher<FetcherResponse>();
+
   return (
     <section>
       <div className='mb-4 flex items-center justify-between'>
         <div>
-          <h2 className='text-lg font-semibold'>Application Groups</h2>
+          <h2 className='text-lg font-semibold'>IP Addresses</h2>
           <p className='mt-1 text-sm text-gray-500'>
-            Groups associated with this application.
+            IP addresses associated with this group.
           </p>
         </div>
 
         <button
-          onClick={handleOpenAddGroup}
-          className='rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800'
+          onClick={() => setIsAddIpOpen(true)}
+          className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800'
         >
-          + Add Group
+          + Add IP
         </button>
       </div>
 
-      {/* Groups Table */}
+      {/* IP Table */}
       <div className='overflow-hidden rounded-xl border bg-white'>
         <table className='w-full text-left'>
           <thead className='border-b bg-gray-50'>
             <tr>
               <th className='px-6 py-4 text-sm font-medium text-gray-500'>
-                Group Name
+                IP Address
               </th>
 
               <th className='px-6 py-4 text-sm font-medium text-gray-500'>
-                IP Addresses
+                Description
               </th>
 
               <th className='px-6 py-4 text-sm font-medium text-gray-500'>
@@ -49,29 +58,52 @@ const ApplicationDetailGroups = ({
           </thead>
 
           <tbody>
-            {groups.length > 0 ? (
-              groups.map((group) => (
+            {ips.length > 0 ? (
+              ips.map((ip) => (
                 <tr
-                  key={group.id}
+                  key={ip.id}
                   className='border-b last:border-0 hover:bg-gray-50'
                 >
                   <td className='px-6 py-4'>
-                    <p className='text-sm font-medium'>{group.name}</p>
-                  </td>
-
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-600'>
-                      {group.ips.length} IPs
+                    <span className='font-mono text-sm font-medium'>
+                      {ip.ipAddress}
                     </span>
                   </td>
 
+                  <td className='px-6 py-4 text-sm text-gray-600'>
+                    {ip.description}
+                  </td>
+
                   <td className='px-6 py-4'>
-                    <Link
-                      to={`/applications/groups/${group.id}`}
-                      className='text-sm font-medium hover:underline'
-                    >
-                      View →
-                    </Link>
+                    <removeIpFetcher.Form method='delete'>
+                      <input
+                        type='hidden'
+                        name='intent'
+                        value='remove-ip'
+                      />
+
+                      <input
+                        type='hidden'
+                        name='groupId'
+                        value={groupId}
+                      />
+
+                      <input
+                        type='hidden'
+                        name='ipId'
+                        value={ip.id}
+                      />
+
+                      <button
+                        disabled={removeIpFetcher.state === 'submitting'}
+                        type='submit'
+                        className='cursor-pointer text-sm text-red-600 hover:underline disabled:cursor-not-allowed disabled:opacity-50'
+                      >
+                        {removeIpFetcher.state === 'submitting'
+                          ? 'Removing...'
+                          : 'Remove'}
+                      </button>
+                    </removeIpFetcher.Form>
                   </td>
                 </tr>
               ))
@@ -97,18 +129,18 @@ const ApplicationDetailGroups = ({
                     </div>
 
                     <p className='text-sm font-medium text-gray-900'>
-                      No application groups
+                      No IP addresses
                     </p>
 
                     <p className='mt-1 text-sm text-gray-500'>
-                      This application doesn't have any groups yet.
+                      This group doesn't have any IP addresses yet.
                     </p>
 
                     <button
-                      onClick={handleOpenAddGroup}
+                      onClick={() => setIsAddIpOpen(true)}
                       className='cursor-pointer mt-4 rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800'
                     >
-                      + Add Group
+                      + Add IP
                     </button>
                   </div>
                 </td>
@@ -121,4 +153,4 @@ const ApplicationDetailGroups = ({
   );
 };
 
-export default ApplicationDetailGroups;
+export default GroupDetailIpSection;

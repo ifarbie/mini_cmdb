@@ -12,11 +12,7 @@ const Sidebar = () => {
           Applications
         </NavLink>
 
-        <NavLink to='/groups'  className={({ isActive }) => `block rounded-lg px-4 py-3 font-medium ${isActive ? 'bg-gray-100' : 'text-gray-600 hover:bg-gray-100'}`}>
-          Application Groups
-        </NavLink>
-
-        <NavLink to='/ips'  className={({ isActive }) => `block rounded-lg px-4 py-3 font-medium ${isActive ? 'bg-gray-100' : 'text-gray-600 hover:bg-gray-100'}`}>
+         <NavLink to='/ips'  className={({ isActive }) => `block rounded-lg px-4 py-3 font-medium ${isActive ? 'bg-gray-100' : 'text-gray-600 hover:bg-gray-100'}`}>
           IP Addresses
         </NavLink>
       </nav>

@@ -1,6 +1,6 @@
 import ApplicationDetailMain from '~/components/application/application-detail/ApplicationDetailMain';
 import type { Route } from './+types/application-detail';
-import { createApplicationGroup, getApplicationById, updateApplicationById } from '~/services/CmdbApi';
+import { createApplicationGroup, deleteApplicationById, getApplicationById, updateApplicationById } from '~/services/CmdbApi';
 import { redirect } from 'react-router';
 
 export function meta({}: Route.MetaArgs) {
@@ -27,6 +27,10 @@ export async function action({ request }: Route.ActionArgs) {
   if (intent === 'update-application') {
     const id = formData.get('id');
 
+    if (!id || typeof id !== 'string') {
+      throw new Response('Invalid IP ID', { status: 400 });
+    }
+
     await updateApplicationById(id, {
       name: formData.get('name') as string,
       environment: formData.get('environment') as string,
@@ -43,12 +47,31 @@ export async function action({ request }: Route.ActionArgs) {
   if (intent === 'add-group') {
     const applicationId = formData.get('applicationId');
 
+    if (!applicationId || typeof applicationId !== 'string') {
+      throw new Response('Invalid IP ID', { status: 400 });
+    }
+
     await createApplicationGroup(applicationId, {
       name: formData.get('name') as string,
       description: formData.get('description') as string,
     });
 
-    return redirect(`/applications/${applicationId}`);
+    return {
+      success: true,
+      intent: 'add-group',
+    };
+  }
+
+  if (intent === 'remove-app') {
+    const applicationId = formData.get('applicationId');
+
+    if (!applicationId || typeof applicationId !== 'string') {
+      throw new Response('Invalid IP ID', { status: 400 });
+    }
+
+    await deleteApplicationById(applicationId);
+
+    return redirect('/applications');
   }
 
   return null;

@@ -1,4 +1,4 @@
-import { Link, useFetcher, useParams } from 'react-router';
+import { useFetcher, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 
 import ApplicationDetailHeader from './ApplicationDetailHeader';
@@ -22,7 +22,6 @@ const ApplicationDetailMain = ({ application }: ApplicationDetailMainProps) => {
   // =========================
   // Edit Application
   // =========================
-
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const [editName, setEditName] = useState(application.name);
@@ -42,7 +41,6 @@ const ApplicationDetailMain = ({ application }: ApplicationDetailMainProps) => {
   // =========================
   // Add Group
   // =========================
-
   const [isAddGroupOpen, setIsAddGroupOpen] = useState(false);
 
   const [groupName, setGroupName] = useState('');
@@ -58,7 +56,11 @@ const ApplicationDetailMain = ({ application }: ApplicationDetailMainProps) => {
     if (updateFetcher.data?.success) {
       setIsEditOpen(false);
     }
-  }, [updateFetcher.data]);
+
+     if (addGroupFetcher.data?.success) {
+      setIsAddGroupOpen(false);
+    }
+  }, [updateFetcher.data, addGroupFetcher.data]);
 
   return (
     <main className='relative flex-1 bg-gray-50 p-8 text-gray-900'>
@@ -173,11 +175,11 @@ const ApplicationDetailMain = ({ application }: ApplicationDetailMainProps) => {
 
               {/* Actions */}
               <div className='flex justify-end gap-3 border-t pt-5'>
-                <button type='button' onClick={() => setIsEditOpen(false)} className='rounded-lg border px-4 py-2 text-sm font-medium hover:bg-gray-50'>
+                <button type='button' onClick={() => setIsEditOpen(false)} className='cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium hover:bg-gray-50'>
                   Cancel
                 </button>
 
-                <button type='submit' disabled={updateFetcher.state === 'submitting'} className='rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
+                <button type='submit' disabled={updateFetcher.state === 'submitting'} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
                   {updateFetcher.state === 'submitting' ? 'Saving...' : 'Save Changes'}
                 </button>
               </div>
@@ -248,11 +250,11 @@ const ApplicationDetailMain = ({ application }: ApplicationDetailMainProps) => {
 
               {/* Actions */}
               <div className='flex justify-end gap-3 border-t pt-5'>
-                <button type='button' onClick={() => setIsAddGroupOpen(false)} className='rounded-lg border px-4 py-2 text-sm font-medium hover:bg-gray-50'>
+                <button type='button' onClick={() => setIsAddGroupOpen(false)} className='cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium hover:bg-gray-50'>
                   Cancel
                 </button>
 
-                <button type='submit' onClick={() => setIsAddGroupOpen(false)} disabled={addGroupFetcher.state === 'submitting'} className='rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
+                <button type='submit' disabled={addGroupFetcher.state === 'submitting'} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
                   {addGroupFetcher.state === 'submitting' ? 'Adding...' : 'Add Group'}
                 </button>
               </div>

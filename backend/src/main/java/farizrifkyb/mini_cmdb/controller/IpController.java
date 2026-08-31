@@ -38,14 +38,20 @@ public class IpController {
         return WebResponse.<List<Ip>>builder().data(listIps).build();
     }
 
-    @PutMapping(path = "/api/ips/{ip_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<Ip> updateIp(@PathVariable("ip_id") Long IpId,
+    @GetMapping(path = "/api/ips/{ipId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<Ip> getIpById(@PathVariable("ipId") Long IpId) {
+        Ip ip = ipService.getIpById(IpId);
+        return WebResponse.<Ip>builder().data(ip).build();
+    }
+
+    @PutMapping(path = "/api/ips/{ipId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<Ip> updateIp(@PathVariable("ipId") Long IpId,
             @RequestBody @Valid IpRequest req) {
         return WebResponse.<Ip>builder().data(ipService.updateIp(IpId, req)).build();
     }
 
-    @DeleteMapping(path = "/api/ips/{ip_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<String> deleteIp(@PathVariable("ip_id") Long ipId) {
+    @DeleteMapping(path = "/api/ips/{ipId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<String> deleteIp(@PathVariable("ipId") Long ipId) {
         String response = ipService.deleteIp(ipId);
         return WebResponse.<String>builder().data(response).build();
     }
