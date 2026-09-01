@@ -7,7 +7,6 @@ import BackToButton from '~/components/ui/BackToButton';
 import type { Application } from '~/types/Application';
 import type { ApplicationGroup } from '~/types/ApplicationGroup';
 
-import ApplicationAddGroupModal from './ApplicationAddGroupModal';
 import ApplicationDetailGroups from './ApplicationDetailGroups';
 import ApplicationDetailHeader from './ApplicationDetailHeader';
 import ApplicationDetailStatistic from './ApplicationDetailStatistic';
