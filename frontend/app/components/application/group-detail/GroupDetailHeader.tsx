@@ -1,25 +1,25 @@
-import { useFetcher } from "react-router";
+import { useFetcher } from 'react-router';
+import type { Application } from '~/types/Application';
+import type { ApplicationGroup } from '~/types/ApplicationGroup';
 
 type GroupDetailHeaderProps = {
-  applicationId: number | string | undefined;
-  groupId: number | string | undefined;
-  name: string;
-  applicationName: string;
+  application: Application;
+  groupDetail: ApplicationGroup;
   handleOpenEdit: () => void;
 };
 
-const GroupDetailHeader = ({ applicationId, groupId, name, applicationName, handleOpenEdit }: GroupDetailHeaderProps) => {
+const GroupDetailHeader = ({ application, groupDetail, handleOpenEdit }: GroupDetailHeaderProps) => {
   const deleteGroupFetcher = useFetcher();
 
   return (
     <div className='mb-8 flex items-start justify-between'>
       <div>
-        <p className='mb-1 text-sm text-gray-500'>Group ID: #{groupId}</p>
+        <p className='mb-1 text-sm text-gray-500'>Group ID: #{groupDetail.id}</p>
 
-        <h1 className='text-3xl font-bold'>{name}</h1>
+        <h1 className='text-3xl font-bold'>{groupDetail.name}</h1>
 
         <p className='mt-2 text-sm text-gray-500'>
-          Application: <span className='font-medium text-gray-900'>{applicationName}</span>
+          Application: <span className='font-medium text-gray-900'>{application.name}</span>
         </p>
       </div>
 
@@ -31,9 +31,9 @@ const GroupDetailHeader = ({ applicationId, groupId, name, applicationName, hand
         <deleteGroupFetcher.Form method='delete'>
           <input type='hidden' name='intent' value='delete-group' />
 
-          <input type='hidden' name='groupId' value={groupId} />
+          <input type='hidden' name='groupId' value={groupDetail.id} />
 
-          <input type='hidden' name='applicationId' value={applicationId} />
+          <input type='hidden' name='applicationId' value={application.id} />
 
           <button disabled={deleteGroupFetcher.state === 'submitting'} type='submit' className='cursor-pointer rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700'>
             {deleteGroupFetcher.state === 'submitting' ? 'Deleting...' : 'Delete'}

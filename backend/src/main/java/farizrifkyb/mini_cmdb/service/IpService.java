@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import farizrifkyb.mini_cmdb.entity.Ip;
 import farizrifkyb.mini_cmdb.model.request.IpRequest;
+import farizrifkyb.mini_cmdb.model.response.IpDetailResponse;
+import farizrifkyb.mini_cmdb.model.response.IpGroupResponse;
 import farizrifkyb.mini_cmdb.model.response.IpResponse;
 import farizrifkyb.mini_cmdb.repository.IpRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +18,22 @@ public class IpService {
 
     private final IpRepository ipRepository;
 
-    public List<Ip> getAllIps() {
-        return ipRepository.findAll();
+    public List<IpDetailResponse> getAllIps() {
+        return ipRepository.findAll()
+                .stream()
+                .map(ip -> new IpDetailResponse(
+                        ip.getId(),
+                        ip.getIpAddress(),
+                        ip.getHostname(),
+                        ip.getDescription(),
+                        ip.getGroups()
+                                .stream()
+                                .map(group -> new IpGroupResponse(
+                                        group.getId(),
+                                        group.getName(),
+                                        group.getDescription()))
+                                .toList()))
+                .toList();
     }
 
     public Ip getIpById(Long id) {
@@ -36,7 +52,7 @@ public class IpService {
         return new IpResponse(req.getIpAddress(), req.getHostname(), req.getDescription());
     }
 
-     public Ip updateIp(Long ipId, IpRequest req) {
+    public Ip updateIp(Long ipId, IpRequest req) {
         Ip ip = ipRepository.findById(ipId)
                 .orElseThrow(() -> new RuntimeException("Ip not found"));
 

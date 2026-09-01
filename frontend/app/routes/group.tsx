@@ -14,10 +14,10 @@ export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
 
   const intent = formData.get('intent');
-  const id = formData.get('id')
+  const id = formData.get('id');
 
   if (!id || typeof id !== 'string') {
-    throw new Response('Invalid IP ID', { status: 400 });
+    throw new Response('Invalid ID', { status: 400 });
   }
 
   if (intent === 'delete') {

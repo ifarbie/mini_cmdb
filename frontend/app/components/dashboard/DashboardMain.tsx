@@ -1,3 +1,4 @@
+import type { Application } from '~/types/Application';
 import PageHeader from '../ui/PageHeader';
 import DashboardRecentApp from './DashboardRecentApp';
 import DashboardStatistic from './DashboardStatistic';
@@ -7,7 +8,7 @@ type DashboardMainProps = {
     totalApplications: number;
     totalApplicationGroups: number;
     totalIps: number;
-    recentApplications: any[];
+    recentApplications: Application[];
   };
 };
 

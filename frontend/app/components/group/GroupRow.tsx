@@ -1,5 +1,8 @@
 import { NavLink, useFetcher } from 'react-router';
 import type { ApplicationGroup } from '~/types/ApplicationGroup';
+import EditLink from '../ui/EditLink';
+import DeleteLink from '../ui/DeleteLink';
+import ViewLink from '../ui/ViewLink';
 
 type GroupRowProps = {
   group: ApplicationGroup;
@@ -18,7 +21,11 @@ export default function GroupRow({ group, index }: GroupRowProps) {
         <div className='text-xs text-gray-500'>#{group.id}</div>
       </td>
 
-      <td className='px-6 py-4'>{group.application.name}</td>
+      <td className='px-6 py-4'>
+        <td className='font-medium'>{group.application.name}</td>
+
+        <div className='text-xs text-gray-500'>#{group.application.id}</div>
+      </td>
 
       <td className='max-w-xs truncate px-6 py-4 text-sm text-gray-500'>{group.description || '-'}</td>
 
@@ -26,18 +33,16 @@ export default function GroupRow({ group, index }: GroupRowProps) {
 
       <td className='px-6 py-4'>
         <div className='flex gap-3 text-sm'>
-          <NavLink to={`/groups/edit/${group.id}`} className='cursor-pointer text-gray-500 hover:text-black'>
-            Edit
-          </NavLink>
+          <ViewLink to={`/groups/${group.id}`}>View</ViewLink>
+
+          <EditLink to={`/groups/edit/${group.id}`}>Edit</EditLink>
 
           <deleteGroupFetcher.Form method='delete'>
             <input type='hidden' name='intent' value='delete' />
 
             <input type='hidden' name='id' value={group.id} />
 
-            <button disabled={deleteGroupFetcher.state === 'submitting'} type='submit' className='cursor-pointer text-red-600 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-50'>
-              {deleteGroupFetcher.state === 'submitting' ? 'Deleting...' : 'Delete'}
-            </button>
+            <DeleteLink isSubmitting={deleteGroupFetcher.state === 'submitting'} />
           </deleteGroupFetcher.Form>
         </div>
       </td>

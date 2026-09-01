@@ -1,7 +1,7 @@
 import type { Route } from './+types/application-edit';
 import { getApplicationById, updateApplicationById } from '~/services/CmdbApi';
 import { redirect } from 'react-router';
-import ApplicationEditMain from '~/components/application/application-edit/ApplicationEditMain';
+import ApplicationFormMain from '~/components/application/application-form/ApplicationFormMain';
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
@@ -28,7 +28,7 @@ export async function action({ request }: Route.ActionArgs) {
   };
 
   if (!applicationId || typeof applicationId !== 'string') {
-    throw new Response('Invalid IP ID', { status: 400 });
+    throw new Response('Invalid ID', { status: 400 });
   }
 
   await updateApplicationById(applicationId, data);
@@ -37,7 +37,7 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 const ApplicationEdit = ({ loaderData }: Route.ComponentProps) => {
-  return <ApplicationEditMain application={loaderData} />;
+  return <ApplicationFormMain mode='edit' application={loaderData} />;
 };
 
 export default ApplicationEdit;

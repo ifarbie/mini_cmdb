@@ -1,6 +1,9 @@
-import { NavLink, useFetcher } from 'react-router';
+import { useFetcher } from 'react-router';
 import type { Application } from '~/types/Application';
 import NoDataTable from '../ui/NoDataTable';
+import EditLink from '../ui/EditLink';
+import ViewLink from '../ui/ViewLink';
+import DeleteLink from '../ui/DeleteLink';
 
 type ApplicationTableProps = {
   applications: Application[];
@@ -50,22 +53,16 @@ const ApplicationTable = ({ applications }: ApplicationTableProps) => {
 
                 <td className='px-6 py-4'>
                   <div className='flex gap-3 text-sm'>
-                    <NavLink to={`/applications/${application.id}`} className='cursor-pointer font-medium hover:underline'>
-                      View
-                    </NavLink>
+                    <ViewLink to={`/applications/${application.id}`}>View</ViewLink>
 
-                    <NavLink to={`/applications/edit/${application.id}`} className='cursor-pointer text-gray-500 hover:text-black'>
-                      Edit
-                    </NavLink>
+                    <EditLink to={`/applications/edit/${application.id}`}>Edit</EditLink>
 
                     <removeAppFetcher.Form method='delete'>
                       <input type='hidden' name='intent' value='remove-app' />
 
                       <input type='hidden' name='applicationId' value={application.id} />
 
-                      <button disabled={removeAppFetcher.state === 'submitting'} type='submit' className='cursor-pointer text-red-600 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-50'>
-                        {removeAppFetcher.state === 'submitting' ? 'Deleting...' : 'Delete'}
-                      </button>
+                      <DeleteLink isSubmitting={removeAppFetcher.state === 'submitting'} />
                     </removeAppFetcher.Form>
                   </div>
                 </td>

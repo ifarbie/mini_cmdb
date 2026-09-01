@@ -3,4 +3,9 @@ export type Ip = {
   ipAddress: string;
   hostname: string;
   description: string;
+  groups: {
+    id: number;
+    name: string;
+    description: string;
+  }[];
 };

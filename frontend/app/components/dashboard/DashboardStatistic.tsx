@@ -1,3 +1,4 @@
+import type { Application } from "~/types/Application";
 import StatisticCard from "./StatisticCard";
 
 type DashboardStatisticProps = {
@@ -5,7 +6,7 @@ type DashboardStatisticProps = {
     totalApplications: number;
     totalApplicationGroups: number;
     totalIps: number;
-    recentApplications: any[];
+    recentApplications: Application[];
   };
 };
 

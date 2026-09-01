@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import farizrifkyb.mini_cmdb.entity.Ip;
 import farizrifkyb.mini_cmdb.model.request.IpRequest;
+import farizrifkyb.mini_cmdb.model.response.IpDetailResponse;
 import farizrifkyb.mini_cmdb.model.response.IpResponse;
 import farizrifkyb.mini_cmdb.model.response.WebResponse;
 import farizrifkyb.mini_cmdb.service.IpService;
@@ -33,9 +34,9 @@ public class IpController {
     }
 
     @GetMapping(path = "/api/ips", produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<List<Ip>> getAllIps() {
-        List<Ip> listIps = ipService.getAllIps();
-        return WebResponse.<List<Ip>>builder().data(listIps).build();
+    public WebResponse<List<IpDetailResponse>> getAllIps() {
+        List<IpDetailResponse> listIps = ipService.getAllIps();
+        return WebResponse.<List<IpDetailResponse>>builder().data(listIps).build();
     }
 
     @GetMapping(path = "/api/ips/{ipId}", produces = MediaType.APPLICATION_JSON_VALUE)

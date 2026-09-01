@@ -41,8 +41,6 @@ const ApplicationEditModal = ({ application, id, isOpen, onClose }: ApplicationE
     return null;
   }
 
-  const isSubmitting = fetcher.state === 'submitting';
-
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4'>
       <div className='w-full max-w-lg rounded-xl bg-white p-6 shadow-xl'>
@@ -54,7 +52,7 @@ const ApplicationEditModal = ({ application, id, isOpen, onClose }: ApplicationE
             <p className='mt-1 text-sm text-gray-500'>Update application information.</p>
           </div>
 
-          <button type='button' onClick={onClose} className='text-xl text-gray-400 hover:text-gray-900'>
+          <button type='button' onClick={onClose} className='cursor-pointer text-xl text-gray-400 hover:text-gray-900'>
             ×
           </button>
         </div>
@@ -144,8 +142,8 @@ const ApplicationEditModal = ({ application, id, isOpen, onClose }: ApplicationE
               Cancel
             </button>
 
-            <button type='submit' disabled={isSubmitting} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
-              {isSubmitting ? 'Saving...' : 'Save Changes'}
+            <button type='submit' disabled={fetcher.state === 'submitting'} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
+              {fetcher.state === 'submitting' ? 'Saving...' : 'Save Changes'}
             </button>
           </div>
         </fetcher.Form>

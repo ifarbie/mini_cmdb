@@ -1,7 +1,7 @@
 import { createIp } from '~/services/CmdbApi';
 import { redirect } from 'react-router';
 import IpFormMain from '~/components/ip/ip-form/IpFormMain';
-import type { Route } from './+types/ip-form';
+import type { Route } from './+types/ip-new';
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: 'Add IP' }];

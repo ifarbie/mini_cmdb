@@ -30,7 +30,7 @@ export default function GroupTable({ groups }: GroupTableProps) {
           {groups.length > 0 ? (
             groups.map((group, index) => <GroupRow key={group.id} index={index+1} group={group} />)
           ) : (
-            <NoDataTable colSpan={5} to='/groups/new' title='No application groups found' description='There are currently no application group to display.' linkText='+ Add Application Group' />
+            <NoDataTable colSpan={6} to='/groups/new' title='No application groups found' description='There are currently no application group to display.' linkText='+ Add Application Group' />
           )}
         </tbody>
       </table>

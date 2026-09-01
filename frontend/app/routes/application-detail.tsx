@@ -28,7 +28,7 @@ export async function action({ request }: Route.ActionArgs) {
     const id = formData.get('id');
 
     if (!id || typeof id !== 'string') {
-      throw new Response('Invalid IP ID', { status: 400 });
+      throw new Response('Invalid ID', { status: 400 });
     }
 
     await updateApplicationById(id, {
@@ -48,7 +48,7 @@ export async function action({ request }: Route.ActionArgs) {
     const applicationId = formData.get('applicationId');
 
     if (!applicationId || typeof applicationId !== 'string') {
-      throw new Response('Invalid IP ID', { status: 400 });
+      throw new Response('Invalid ID', { status: 400 });
     }
 
     await createApplicationGroup(applicationId, {
@@ -66,7 +66,7 @@ export async function action({ request }: Route.ActionArgs) {
     const applicationId = formData.get('applicationId');
 
     if (!applicationId || typeof applicationId !== 'string') {
-      throw new Response('Invalid IP ID', { status: 400 });
+      throw new Response('Invalid ID', { status: 400 });
     }
 
     await deleteApplicationById(applicationId);

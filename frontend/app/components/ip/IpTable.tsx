@@ -1,7 +1,9 @@
-import { Link, useFetcher } from 'react-router';
+import { useFetcher } from 'react-router';
 
 import type { Ip } from '~/types/Ip';
 import NoDataTable from '../ui/NoDataTable';
+import EditLink from '../ui/EditLink';
+import DeleteLink from '../ui/DeleteLink';
 
 type IpTableProps = {
   ips: Ip[];
@@ -28,6 +30,8 @@ const IpTable = ({ ips }: IpTableProps) => {
 
             <th className='px-6 py-4 text-sm font-medium text-gray-500'>Description</th>
 
+            <th className='px-6 py-4 text-sm font-medium text-gray-500'>Groups Count</th>
+
             <th className='px-6 py-4 text-sm font-medium text-gray-500'>Actions</th>
           </tr>
         </thead>
@@ -46,20 +50,18 @@ const IpTable = ({ ips }: IpTableProps) => {
 
                 <td className='px-6 py-4 text-sm text-gray-600'>{ip.description || '-'}</td>
 
+                <td className='px-6 py-4 text-sm text-gray-600'>{ip.groups.length}</td>
+
                 <td className='px-6 py-4'>
                   <div className='flex gap-3 text-sm'>
-                    <Link to={`/ips/edit/${ip.id}`} className='font-medium hover:underline'>
-                      Edit
-                    </Link>
+                    <EditLink to={`/ips/edit/${ip.id}`}>Edit</EditLink>
 
                     <deleteFetcher.Form method='delete'>
                       <input type='hidden' name='intent' value='delete-ip' />
 
                       <input type='hidden' name='ipId' value={ip.id} />
 
-                      <button type='submit' disabled={deleteFetcher.state === 'submitting'} className='cursor-pointer text-red-600 hover:text-red-700 disabled:opacity-50'>
-                        {deleteFetcher.state === 'submitting' ? 'Deleting...' : 'Delete'}
-                      </button>
+                      <DeleteLink isSubmitting={deleteFetcher.state === 'submitting'} />
                     </deleteFetcher.Form>
                   </div>
                 </td>

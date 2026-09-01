@@ -1,13 +1,9 @@
 import { Link, useFetcher } from 'react-router';
 import BackToButton from '~/components/ui/BackToButton';
 import PageHeader from '~/components/ui/PageHeader';
+import type { Application } from '~/types/Application';
 
 import type { ApplicationGroup } from '~/types/ApplicationGroup';
-
-type Application = {
-  id: number;
-  name: string;
-};
 
 type GroupFormMainProps = {
   mode: 'create' | 'edit';
@@ -27,7 +23,6 @@ const GroupFormMain = ({ mode, group, applications = [] }: GroupFormMainProps) =
       <BackToButton to='/groups'>Groups</BackToButton>
 
       {/* Header */}
-
       <PageHeader title={isEdit ? 'Edit Group' : 'Create Group'} description={isEdit ? 'Update group information.' : 'Create a new application group.'} />
 
       {/* Form Application */}

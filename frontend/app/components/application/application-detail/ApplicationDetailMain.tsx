@@ -30,8 +30,6 @@ const ApplicationDetailMain = ({ application }: ApplicationDetailMainProps) => {
 
       <ApplicationDetailStatistic application={application} />
 
-      <ApplicationDetailDescription description={application.description} />
-
       <ApplicationDetailGroups groups={application.groups} handleOpenAddGroup={() => setIsAddGroupOpen(true)} />
 
       <ApplicationEditModal application={application} id={id} isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} />

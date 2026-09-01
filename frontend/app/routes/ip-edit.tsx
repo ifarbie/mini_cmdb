@@ -4,7 +4,6 @@ import { redirect } from 'react-router';
 import IpFormMain from '~/components/ip/ip-form/IpFormMain';
 import type { Route } from './+types/ip-edit';
 
-
 export function meta({}: Route.MetaArgs) {
   return [{ title: 'Edit IP' }];
 }
@@ -13,7 +12,7 @@ export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
 
   if (!id || Number.isNaN(Number(id))) {
-    throw new Response('Invalid IP ID', {
+    throw new Response('Invalid ID', {
       status: 400,
     });
   }
@@ -35,8 +34,8 @@ export async function action({ request }: Route.ActionArgs) {
   };
 
   if (!ipId || typeof ipId !== 'string') {
-      throw new Response('Invalid IP ID', { status: 400 });
-    }
+    throw new Response('Invalid ID', { status: 400 });
+  }
 
   await updateIpById(ipId, data);
 
@@ -46,5 +45,3 @@ export async function action({ request }: Route.ActionArgs) {
 export default function IpEdit({ loaderData }: Route.ComponentProps) {
   return <IpFormMain ip={loaderData} />;
 }
-
-

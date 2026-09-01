@@ -10,6 +10,7 @@ import GroupDetailIpSection from './GroupDetailIpSection';
 
 import type { ApplicationGroup } from '~/types/ApplicationGroup';
 import type { Ip } from '~/types/Ip';
+import { useSearchParams } from 'react-router';
 
 type GroupDetailMainProps = {
   groupDetail: ApplicationGroup;
@@ -24,6 +25,10 @@ type FetcherResponse = {
 };
 
 export default function GroupDetailMain({ groupDetail }: GroupDetailMainProps) {
+  const [searchParams] = useSearchParams();
+  const applicationId = searchParams.get('applicationId');
+  const isFromApplication = Boolean(applicationId);
+
   const updateFetcher = useFetcher<FetcherResponse>();
   const addIpFetcher = useFetcher<FetcherResponse>();
 
@@ -49,10 +54,6 @@ export default function GroupDetailMain({ groupDetail }: GroupDetailMainProps) {
   const handleCloseAddIp = () => {
     setSelectedIpId('');
     setIsAddIpOpen(false);
-  };
-
-  const handleRemoveIp = (ipId: number) => {
-    console.log('Remove IP:', ipId);
   };
 
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -87,13 +88,13 @@ export default function GroupDetailMain({ groupDetail }: GroupDetailMainProps) {
 
   return (
     <main className='relative flex-1 bg-gray-50 p-8 text-gray-900'>
-      <BackToButton to={`/applications/${groupDetail.application.id}`}>Applications</BackToButton>
+      {isFromApplication ? <BackToButton to={`/applications/${applicationId}`}>Application</BackToButton> : <BackToButton to={`/groups`}>Application Groups</BackToButton>}
 
-      <GroupDetailHeader applicationId={groupDetail.application.id} groupId={groupDetail.id} name={groupDetail.name} applicationName={groupDetail.application.name} handleOpenEdit={handleOpenEdit} />
+      <GroupDetailHeader application={groupDetail.application} groupDetail={groupDetail} handleOpenEdit={handleOpenEdit} />
 
-      <GroupDetailSummary applicationName={groupDetail.application.name} ipsLength={groupDetail.ips.length} description={groupDetail.description} />
+      <GroupDetailSummary application={groupDetail.application} groupDetail={groupDetail} />
 
-      <GroupDetailIpSection groupId={groupDetail.id} setIsAddIpOpen={handleOpenAddIp} ips={groupDetail.ips} handleRemoveIp={handleRemoveIp} />
+      <GroupDetailIpSection groupId={groupDetail.id} setIsAddIpOpen={handleOpenAddIp} ips={groupDetail.ips} />
 
       {isAddIpOpen && (
         <addIpFetcher.Form method='post' className='fixed inset-0 flex items-center justify-center bg-black/40 p-4'>

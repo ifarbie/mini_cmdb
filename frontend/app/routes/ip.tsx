@@ -19,7 +19,7 @@ export async function action({ request }: Route.ActionArgs) {
     const ipId = formData.get('ipId');
 
     if (!ipId || typeof ipId !== 'string') {
-      throw new Response('Invalid IP ID', { status: 400 });
+      throw new Response('Invalid ID', { status: 400 });
     }
 
     await deleteIpById(ipId);

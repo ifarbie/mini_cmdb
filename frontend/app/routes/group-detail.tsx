@@ -28,7 +28,7 @@ export async function action({ request }: Route.ActionArgs) {
     const groupId = formData.get('groupId');
 
     if (!groupId || typeof groupId !== 'string') {
-      throw new Response('Invalid IP ID', { status: 400 });
+      throw new Response('Invalid ID', { status: 400 });
     }
 
     await updateApplicationGroupById(groupId, {
@@ -45,12 +45,12 @@ export async function action({ request }: Route.ActionArgs) {
   if (intent === 'add-ip') {
     const groupId = formData.get('groupId');
 
-     if (!groupId || typeof groupId !== 'string') {
-      throw new Response('Invalid IP ID', { status: 400 });
+    if (!groupId || typeof groupId !== 'string') {
+      throw new Response('Invalid ID', { status: 400 });
     }
 
     await addIpToGroup(groupId, {
-      ipId: formData.get('ipId') as string
+      ipId: formData.get('ipId') as string,
     });
 
     return {
@@ -62,14 +62,14 @@ export async function action({ request }: Route.ActionArgs) {
   if (intent === 'remove-ip') {
     const groupId = formData.get('groupId');
 
-     if (!groupId || typeof groupId !== 'string') {
-      throw new Response('Invalid IP ID', { status: 400 });
+    if (!groupId || typeof groupId !== 'string') {
+      throw new Response('Invalid ID', { status: 400 });
     }
 
     await removeIpFromGroup(groupId, {
-      ipId: formData.get('ipId') as string
+      ipId: formData.get('ipId') as string,
     });
-    
+
     return {
       success: true,
       intent: 'update-group',
@@ -81,11 +81,11 @@ export async function action({ request }: Route.ActionArgs) {
     const applicationId = formData.get('applicationId');
 
     if (!groupId || typeof groupId !== 'string') {
-      throw new Response('Invalid IP ID', { status: 400 });
+      throw new Response('Invalid ID', { status: 400 });
     }
 
     await deleteApplicationGroupById(groupId);
-    
+
     return redirect(`/applications/${applicationId}`);
   }
 }

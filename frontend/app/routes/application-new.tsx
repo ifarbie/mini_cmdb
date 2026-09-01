@@ -1,5 +1,5 @@
 import ApplicationFormMain from '~/components/application/application-form/ApplicationFormMain';
-import type { Route } from './+types/application-form';
+import type { Route } from './+types/application-new';
 import { createApplication } from '~/services/CmdbApi';
 import { redirect } from 'react-router';
 
@@ -18,8 +18,8 @@ export async function action({ request }: Route.ActionArgs) {
   return redirect('/applications');
 }
 
-const ApplicationForm = () => {
-  return <ApplicationFormMain />;
+const ApplicationNew = () => {
+  return <ApplicationFormMain mode='create' />;
 };
 
-export default ApplicationForm;
+export default ApplicationNew;
