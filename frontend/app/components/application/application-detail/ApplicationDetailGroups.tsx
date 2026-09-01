@@ -31,6 +31,8 @@ const ApplicationDetailGroups = ({ handleOpenAddGroup, groups }: ApplicationDeta
 
               <th className='px-6 py-4 text-sm font-medium text-gray-500'>IP Addresses</th>
 
+              <th className='px-6 py-4 text-sm font-medium text-gray-500'>Description</th>
+
               <th className='px-6 py-4 text-sm font-medium text-gray-500'>Action</th>
             </tr>
           </thead>
@@ -45,6 +47,10 @@ const ApplicationDetailGroups = ({ handleOpenAddGroup, groups }: ApplicationDeta
 
                   <td className='px-6 py-4'>
                     <span className='text-sm text-gray-600'>{group.ips.length} IPs</span>
+                  </td>
+
+                  <td className='px-6 py-4'>
+                    <span className='text-sm text-gray-600'>{group.description ? group.description : "-"}</span>
                   </td>
 
                   <td className='px-6 py-4'>

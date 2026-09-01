@@ -2,6 +2,7 @@ import { NavLink } from 'react-router';
 import type { Application } from '~/types/Application';
 import NoDataTable from '../ui/NoDataTable';
 import ViewLink from '../ui/ViewLink';
+import StatusBadge from '../ui/StatusBadge';
 
 type DashboardRecentAppProps = {
   recentApplications: Application[];
@@ -39,7 +40,9 @@ const DashboardRecentApp = ({ recentApplications }: DashboardRecentAppProps) => 
                 <tr key={application.id} className='border-b last:border-0'>
                   <td className='px-6 py-4'>{application.name}</td>
                   <td className='px-6 py-4'>{application.environment}</td>
-                  <td className='px-6 py-4'>{application.status}</td>
+                  <td className='px-6 py-4'>
+                    <StatusBadge status={application.status} />
+                  </td>
                   <td className='px-6 py-4'>{application.groups.length}</td>
                   <td className='px-6 py-4'>
                     <ViewLink to={`/applications/${application.id}`}>View →</ViewLink>

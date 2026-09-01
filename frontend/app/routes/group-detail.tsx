@@ -1,4 +1,4 @@
-import GroupDetailMain from '~/components/application/group-detail/GroupDetailMain';
+import GroupDetailMain from '~/components/group/group-detail/GroupDetailMain';
 import type { Route } from './+types/application-detail';
 import { addIpToGroup, deleteApplicationGroupById, getApplicationGroupById, removeIpFromGroup, updateApplicationGroupById } from '~/services/CmdbApi';
 import { redirect } from 'react-router';
