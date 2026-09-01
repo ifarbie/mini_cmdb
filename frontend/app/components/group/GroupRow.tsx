@@ -3,12 +3,15 @@ import type { ApplicationGroup } from '~/types/ApplicationGroup';
 
 type GroupRowProps = {
   group: ApplicationGroup;
+  index: string | number;
 };
 
-export default function GroupRow({ group }: GroupRowProps) {
+export default function GroupRow({ group, index }: GroupRowProps) {
   const deleteGroupFetcher = useFetcher();
   return (
     <tr className='border-b last:border-0'>
+      <td className='px-6 py-4'>{index}</td>
+
       <td className='px-6 py-4'>
         <div className='font-medium'>{group.name}</div>
 

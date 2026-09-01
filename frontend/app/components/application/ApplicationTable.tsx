@@ -22,7 +22,7 @@ const ApplicationTable = ({ applications }: ApplicationTableProps) => {
 
             <th className='px-6 py-4 text-sm font-medium text-gray-500'>Status</th>
 
-            <th className='px-6 py-4 text-sm font-medium text-gray-500'>Group Counts</th>
+            <th className='px-6 py-4 text-sm font-medium text-gray-500'>Groups Count</th>
 
             <th className='px-6 py-4 text-sm font-medium text-gray-500'>Actions</th>
           </tr>

@@ -1,26 +1,19 @@
 import type { ApplicationGroup } from '~/types/ApplicationGroup';
 import GroupRow from './GroupRow';
+import NoDataTable from '../ui/NoDataTable';
 
 type GroupTableProps = {
   groups: ApplicationGroup[];
 };
 
 export default function GroupTable({ groups }: GroupTableProps) {
-  if (groups.length === 0) {
-    return (
-      <div className='rounded-xl border p-8 text-center'>
-        <h2 className='font-medium'>No groups found</h2>
-
-        <p className='mt-1 text-sm text-gray-500'>There are currently no groups available.</p>
-      </div>
-    );
-  }
-
   return (
     <div className='overflow-hidden rounded-xl border bg-white'>
       <table className='w-full text-left'>
         <thead className='border-b bg-gray-50'>
           <tr>
+            <th className='px-6 py-4 text-sm font-medium text-gray-500'>No</th>
+
             <th className='px-6 py-4 text-sm font-medium text-gray-500'>Group</th>
 
             <th className='px-6 py-4 text-sm font-medium text-gray-500'>Application</th>
@@ -34,9 +27,11 @@ export default function GroupTable({ groups }: GroupTableProps) {
         </thead>
 
         <tbody>
-          {groups.map((group) => (
-            <GroupRow key={group.id} group={group} />
-          ))}
+          {groups.length > 0 ? (
+            groups.map((group, index) => <GroupRow key={group.id} index={index+1} group={group} />)
+          ) : (
+            <NoDataTable colSpan={5} to='/groups/new' title='No application groups found' description='There are currently no application group to display.' linkText='+ Add Application Group' />
+          )}
         </tbody>
       </table>
     </div>
