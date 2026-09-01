@@ -33,7 +33,7 @@ public class ApplicationGroupController {
         return WebResponse.<ApplicationGroup>builder().data(newApplicationGroup).build();
     }
 
-    @GetMapping(path = "/api/applications/groups", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/api/groups", produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<List<ApplicationGroupResponse>> getApplicationGroups() {
         List<ApplicationGroupResponse> listApplicationGroups = applicationGroupService.getApplicationGroups();
         return WebResponse.<List<ApplicationGroupResponse>>builder().data(listApplicationGroups).build();

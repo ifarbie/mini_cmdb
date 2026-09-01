@@ -7,6 +7,7 @@ export async function getStatistics() {
   return await apiClient('/statistics');
 }
 
+// APPLICATIONS
 export async function getApplications() {
   return await apiClient('/applications');
 }
@@ -41,9 +42,15 @@ export async function deleteApplicationById(applicationId: string) {
   });
 }
 
+// APP GROUP
 export async function getApplicationGroupById(groupId: string) {
   return await apiClient(`/applications/groups/${groupId}`);
 }
+
+export async function getApplicationGroups() {
+  return await apiClient('/groups');
+}
+
 
 export async function createApplicationGroup(appId: string, req: CreateApplicationGroupRequest) {
   return apiClient(`/applications/${appId}/groups`, {
@@ -71,6 +78,8 @@ export async function updateApplicationGroupById(id: string, req: CreateApplicat
   });
 }
 
+
+// IP
 export async function getIps() {
   return await apiClient('/ips');
 }

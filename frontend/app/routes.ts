@@ -11,4 +11,8 @@ export default [
   route('/ips', 'routes/ip.tsx'),
   route('/ips/new', 'routes/ip-form.tsx'),
   route('/ips/edit/:id', 'routes/ip-edit.tsx'),
+
+  route('/groups', 'routes/group.tsx'),
+  route('/groups/new', 'routes/group-new.tsx'),
+  route('/groups/edit/:id', 'routes/group-edit.tsx'),
 ] satisfies RouteConfig;
