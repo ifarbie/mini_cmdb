@@ -1,6 +1,6 @@
 import ApplicationDetailMain from '~/components/application/application-detail/ApplicationDetailMain';
 import type { Route } from './+types/application-detail';
-import { createApplicationGroup, deleteApplicationById, getApplicationById, updateApplicationById } from '~/services/CmdbApi';
+import { createApplicationGroup, deleteApplicationById, deleteApplicationGroupById, getApplicationById, updateApplicationById, updateApplicationGroupById } from '~/services/CmdbApi';
 import { redirect } from 'react-router';
 
 export function meta({}: Route.MetaArgs) {
@@ -44,6 +44,18 @@ export async function action({ request }: Route.ActionArgs) {
     };
   }
 
+  if (intent === 'remove-app') {
+    const applicationId = formData.get('applicationId');
+
+    if (!applicationId || typeof applicationId !== 'string') {
+      throw new Response('Invalid ID', { status: 400 });
+    }
+
+    await deleteApplicationById(applicationId);
+
+    return redirect('/applications');
+  }
+
   if (intent === 'add-group') {
     const applicationId = formData.get('applicationId');
 
@@ -62,16 +74,37 @@ export async function action({ request }: Route.ActionArgs) {
     };
   }
 
-  if (intent === 'remove-app') {
-    const applicationId = formData.get('applicationId');
+  if (intent === 'update-group') {
+    const groupId = formData.get('groupId');
 
-    if (!applicationId || typeof applicationId !== 'string') {
+    if (!groupId || typeof groupId !== 'string') {
       throw new Response('Invalid ID', { status: 400 });
     }
 
-    await deleteApplicationById(applicationId);
+    await updateApplicationGroupById(groupId, {
+      name: formData.get('name') as string,
+      description: formData.get('description') as string,
+    });
 
-    return redirect('/applications');
+    return {
+      success: true,
+      intent: 'add-group',
+    };
+  }
+
+  if (intent === 'delete-group') {
+    const groupId = formData.get('groupId');
+
+    if (!groupId || typeof groupId !== 'string') {
+      throw new Response('Invalid ID', { status: 400 });
+    }
+
+    await deleteApplicationGroupById(groupId);
+
+    return {
+      success: true,
+      intent: 'add-group',
+    };
   }
 
   return null;

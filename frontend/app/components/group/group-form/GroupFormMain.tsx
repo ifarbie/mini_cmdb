@@ -1,4 +1,4 @@
-import { Link, useFetcher } from 'react-router';
+import { Link, useFetcher, useSearchParams } from 'react-router';
 import BackToButton from '~/components/ui/BackToButton';
 import PageHeader from '~/components/ui/PageHeader';
 import type { Application } from '~/types/Application';
@@ -17,10 +17,14 @@ const GroupFormMain = ({ mode, group, applications = [] }: GroupFormMainProps) =
   const isEdit = mode === 'edit';
   const fetcher = useFetcher();
 
+  const [searchParams] = useSearchParams();
+  const applicationId = searchParams.get('applicationId');
+  const isFromApplication = Boolean(applicationId);
+
   return (
     <main className='flex-1 bg-gray-50 p-8 text-gray-900'>
       {/* Back */}
-      <BackToButton to='/groups'>Groups</BackToButton>
+      {isFromApplication ? <BackToButton to={`/applications/${applicationId}`}>Application</BackToButton> : <BackToButton to='/groups'>Groups</BackToButton>}
 
       {/* Header */}
       <PageHeader title={isEdit ? 'Edit Group' : 'Create Group'} description={isEdit ? 'Update group information.' : 'Create a new application group.'} />

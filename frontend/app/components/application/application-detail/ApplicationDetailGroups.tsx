@@ -1,23 +1,32 @@
-import { Link, useParams } from 'react-router';
+import { useFetcher, useParams } from 'react-router';
+
+import DeleteLink from '~/components/ui/DeleteLink';
+import ViewLink from '~/components/ui/ViewLink';
 
 import type { ApplicationGroup } from '~/types/ApplicationGroup';
 
 type ApplicationDetailGroupsProps = {
   handleOpenAddGroup: () => void;
+  handleOpenEditGroup: (group: ApplicationGroup) => void;
   groups: ApplicationGroup[];
 };
 
-const ApplicationDetailGroups = ({ handleOpenAddGroup, groups }: ApplicationDetailGroupsProps) => {
+const ApplicationDetailGroups = ({ handleOpenAddGroup, handleOpenEditGroup, groups }: ApplicationDetailGroupsProps) => {
   const { id } = useParams();
+
+  const deleteGroupFetcher = useFetcher();
+
   return (
     <section>
+      {/* Header */}
       <div className='mb-4 flex items-center justify-between'>
         <div>
           <h2 className='text-lg font-semibold'>Application Groups</h2>
+
           <p className='mt-1 text-sm text-gray-500'>Groups associated with this application.</p>
         </div>
 
-        <button onClick={handleOpenAddGroup} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800'>
+        <button type='button' onClick={handleOpenAddGroup} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800'>
           + Add Group
         </button>
       </div>
@@ -33,7 +42,7 @@ const ApplicationDetailGroups = ({ handleOpenAddGroup, groups }: ApplicationDeta
 
               <th className='px-6 py-4 text-sm font-medium text-gray-500'>Description</th>
 
-              <th className='px-6 py-4 text-sm font-medium text-gray-500'>Action</th>
+              <th className='px-6 py-4 text-sm font-medium text-gray-500'>Actions</th>
             </tr>
           </thead>
 
@@ -50,19 +59,31 @@ const ApplicationDetailGroups = ({ handleOpenAddGroup, groups }: ApplicationDeta
                   </td>
 
                   <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-600'>{group.description ? group.description : "-"}</span>
+                    <span className='text-sm text-gray-600'>{group.description || '-'}</span>
                   </td>
 
                   <td className='px-6 py-4'>
-                    <Link to={`/groups/${group.id}?applicationId=${id}`} className='text-sm font-medium hover:underline'>
-                      View →
-                    </Link>
+                    <div className='flex gap-3 text-sm'>
+                      <ViewLink to={`/groups/${group.id}?applicationId=${id}`}>View</ViewLink>
+
+                      <button type='button' onClick={() => handleOpenEditGroup(group)} className='cursor-pointer font-medium hover:underline'>
+                        Edit
+                      </button>
+
+                      <deleteGroupFetcher.Form method='delete'>
+                        <input type='hidden' name='intent' value='delete-group' />
+
+                        <input type='hidden' name='groupId' value={group.id} />
+
+                        <DeleteLink isSubmitting={deleteGroupFetcher.state === 'submitting'} />
+                      </deleteGroupFetcher.Form>
+                    </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={3} className='px-6 py-14 text-center'>
+                <td colSpan={4} className='px-6 py-14 text-center'>
                   <div className='flex flex-col items-center justify-center'>
                     <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100'>
                       <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='h-6 w-6 text-gray-400'>

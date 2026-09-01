@@ -35,7 +35,7 @@ const ApplicationEditModal = ({ application, id, isOpen, onClose }: ApplicationE
     if (fetcher.data?.success) {
       onClose();
     }
-  }, [fetcher.data, onClose]);
+  }, [fetcher.data]);
 
   if (!isOpen) {
     return null;

@@ -20,7 +20,7 @@ const ApplicationDetailStatistic = ({ application }: ApplicationDetailStatisticP
         <div className='rounded-xl border bg-white p-6'>
           <p className='text-sm text-gray-500 mb-2'>Status</p>
 
-          <StatusBadge size="md" status={application.status} />
+          <StatusBadge size='md' status={application.status} />
         </div>
 
         {/* Groups */}

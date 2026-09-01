@@ -4,6 +4,7 @@ import NoDataTable from '../ui/NoDataTable';
 import EditLink from '../ui/EditLink';
 import ViewLink from '../ui/ViewLink';
 import DeleteLink from '../ui/DeleteLink';
+import StatusBadge from '../ui/StatusBadge';
 
 type ApplicationTableProps = {
   applications: Application[];
@@ -42,11 +43,7 @@ const ApplicationTable = ({ applications }: ApplicationTableProps) => {
                 <td className='px-6 py-4 text-sm text-gray-600'>{application.environment}</td>
 
                 <td className='px-6 py-4'>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${application.status === 'GOOD' ? 'bg-green-100 text-green-700' : application.status === 'WARNING' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`}
-                  >
-                    {application.status}
-                  </span>
+                  <StatusBadge status={application.status} />
                 </td>
 
                 <td className='px-6 py-4 text-sm'>{application.groups.length}</td>

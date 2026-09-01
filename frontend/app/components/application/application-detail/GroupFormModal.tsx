@@ -1,25 +1,35 @@
 import { useEffect, useState } from 'react';
+
 import { useFetcher } from 'react-router';
 
-type ApplicationAddGroupModalProps = {
-  applicationName: string;
-  applicationId?: string;
+import type { ApplicationGroup } from '~/types/ApplicationGroup';
+
+type GroupFormModalProps = {
+  mode: 'create' | 'edit';
+  applicationName?: string;
+  applicationId?: string | number;
+  group?: ApplicationGroup;
   isOpen: boolean;
   onClose: () => void;
 };
 
-const ApplicationAddGroupModal = ({ applicationName, applicationId, isOpen, onClose }: ApplicationAddGroupModalProps) => {
+const GroupFormModal = ({ mode, applicationName, applicationId, group, isOpen, onClose }: GroupFormModalProps) => {
   const fetcher = useFetcher();
+
+  const isEdit = mode === 'edit';
+  const isSubmitting = fetcher.state === 'submitting';
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    if (isOpen) {
-      setName('');
-      setDescription('');
+    if (!isOpen) {
+      return;
     }
-  }, [isOpen]);
+
+    setName(group?.name ?? '');
+    setDescription(group?.description ?? '');
+  }, [isOpen, group]);
 
   useEffect(() => {
     if (fetcher.data?.success) {
@@ -27,11 +37,15 @@ const ApplicationAddGroupModal = ({ applicationName, applicationId, isOpen, onCl
     }
   }, [fetcher.data]);
 
+  const title = isEdit ? 'Edit Application Group' : 'Add Application Group';
+
+  const modalDescription = isEdit ? 'Update group information.' : `Add a new group to ${applicationName}.`;
+
+  const intent = isEdit ? 'update-group' : 'add-group';
+
   if (!isOpen) {
     return null;
   }
-
-  const isSubmitting = fetcher.state === 'submitting';
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4'>
@@ -39,9 +53,9 @@ const ApplicationAddGroupModal = ({ applicationName, applicationId, isOpen, onCl
         {/* Header */}
         <div className='mb-6 flex items-center justify-between'>
           <div>
-            <h2 className='text-lg font-semibold'>Add Application Group</h2>
+            <h2 className='text-lg font-semibold'>{title}</h2>
 
-            <p className='mt-1 text-sm text-gray-500'>Add a new group to {applicationName}.</p>
+            <p className='mt-1 text-sm text-gray-500'>{modalDescription}</p>
           </div>
 
           <button type='button' onClick={onClose} className='text-xl text-gray-400 hover:text-gray-900'>
@@ -50,9 +64,14 @@ const ApplicationAddGroupModal = ({ applicationName, applicationId, isOpen, onCl
         </div>
 
         <fetcher.Form method='post'>
-          <input type='hidden' name='intent' value='add-group' />
+          {/* Intent */}
+          <input type='hidden' name='intent' value={intent} />
 
-          <input type='hidden' name='applicationId' value={applicationId} />
+          {/* Application ID */}
+          {!isEdit && <input type='hidden' name='applicationId' value={applicationId} />}
+
+          {/* Group ID */}
+          {isEdit && <input type='hidden' name='groupId' value={group?.id} />}
 
           {/* Group Name */}
           <div className='mb-5'>
@@ -96,7 +115,7 @@ const ApplicationAddGroupModal = ({ applicationName, applicationId, isOpen, onCl
             </button>
 
             <button type='submit' disabled={isSubmitting} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
-              {isSubmitting ? 'Adding...' : 'Add Group'}
+              {isSubmitting ? (isEdit ? 'Saving...' : 'Adding...') : isEdit ? 'Save Changes' : 'Add Group'}
             </button>
           </div>
         </fetcher.Form>
@@ -105,4 +124,4 @@ const ApplicationAddGroupModal = ({ applicationName, applicationId, isOpen, onCl
   );
 };
 
-export default ApplicationAddGroupModal;
+export default GroupFormModal;
