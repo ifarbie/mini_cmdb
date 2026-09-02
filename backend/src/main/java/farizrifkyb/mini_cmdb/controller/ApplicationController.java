@@ -17,14 +17,13 @@ import farizrifkyb.mini_cmdb.model.response.WebResponse;
 import farizrifkyb.mini_cmdb.service.ApplicationService;
 import jakarta.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class ApplicationController {
 
     private final ApplicationService applicationService;
-
-    public ApplicationController(ApplicationService applicationService) {
-        this.applicationService = applicationService;
-    }
 
     @PostMapping(path = "/api/applications", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<Application> createApplication(@RequestBody @Valid ApplicationRequest req) {

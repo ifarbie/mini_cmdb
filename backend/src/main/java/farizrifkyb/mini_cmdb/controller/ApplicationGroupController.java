@@ -17,15 +17,13 @@ import farizrifkyb.mini_cmdb.model.response.ApplicationGroupResponse;
 import farizrifkyb.mini_cmdb.model.response.WebResponse;
 import farizrifkyb.mini_cmdb.service.ApplicationGroupService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class ApplicationGroupController {
 
     private final ApplicationGroupService applicationGroupService;
-
-    public ApplicationGroupController(ApplicationGroupService applicationGroupService) {
-        this.applicationGroupService = applicationGroupService;
-    }
 
     @PostMapping(path = "/api/applications/{application_id}/groups", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<ApplicationGroup> createApplicationGroup(@PathVariable("application_id") Long applicationId, @RequestBody @Valid ApplicationGroupRequest req) {

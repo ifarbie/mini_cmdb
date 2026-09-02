@@ -18,15 +18,13 @@ import farizrifkyb.mini_cmdb.model.response.IpResponse;
 import farizrifkyb.mini_cmdb.model.response.WebResponse;
 import farizrifkyb.mini_cmdb.service.IpService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class IpController {
 
     private final IpService ipService;
-
-    public IpController(IpService ipService) {
-        this.ipService = ipService;
-    }
 
     @PostMapping(path = "/api/ips", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<IpResponse> createIp(@RequestBody @Valid IpRequest req) {

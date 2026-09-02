@@ -11,15 +11,13 @@ import farizrifkyb.mini_cmdb.model.request.GroupIpRequest;
 import farizrifkyb.mini_cmdb.model.response.WebResponse;
 import farizrifkyb.mini_cmdb.service.GroupIpService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class GroupIpController {
 
     private final GroupIpService groupIpService;
-
-    public GroupIpController(GroupIpService groupIpService) {
-        this.groupIpService = groupIpService;
-    }
 
     @PostMapping(path = "/api/groups/{group_id}/ips", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<String> assignIp(@PathVariable("group_id") Long groupId,
