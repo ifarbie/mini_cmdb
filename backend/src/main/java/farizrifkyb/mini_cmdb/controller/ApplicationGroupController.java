@@ -2,7 +2,6 @@ package farizrifkyb.mini_cmdb.controller;
 
 import java.util.List;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,33 +24,34 @@ public class ApplicationGroupController {
 
     private final ApplicationGroupService applicationGroupService;
 
-    @PostMapping(path = "/api/applications/{application_id}/groups", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<ApplicationGroup> createApplicationGroup(@PathVariable("application_id") Long applicationId, @RequestBody @Valid ApplicationGroupRequest req) {
-        ApplicationGroup newApplicationGroup = applicationGroupService.createApplicationGroup(applicationId, req);
-        return WebResponse.<ApplicationGroup>builder().data(newApplicationGroup).build();
+    @PostMapping("/api/applications/{applicationId}/groups")
+    public WebResponse<ApplicationGroup> createApplicationGroup(@PathVariable("applicationId") Long applicationId,
+            @RequestBody @Valid ApplicationGroupRequest req) {
+        return WebResponse.<ApplicationGroup>builder()
+                .data(applicationGroupService.createApplicationGroup(applicationId, req)).build();
     }
 
-    @GetMapping(path = "/api/groups", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/groups")
     public WebResponse<List<ApplicationGroupResponse>> getApplicationGroups() {
-        List<ApplicationGroupResponse> listApplicationGroups = applicationGroupService.getApplicationGroups();
-        return WebResponse.<List<ApplicationGroupResponse>>builder().data(listApplicationGroups).build();
+        return WebResponse.<List<ApplicationGroupResponse>>builder()
+                .data(applicationGroupService.getApplicationGroups()).build();
     }
 
-    @GetMapping(path = "/api/applications/groups/{group_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<ApplicationGroupResponse> getApplicationGroupById(@PathVariable("group_id") Long groupId) {
-        ApplicationGroupResponse applicationGroup = applicationGroupService.getApplicationGroupById(groupId);
-        return WebResponse.<ApplicationGroupResponse>builder().data(applicationGroup).build();
+    @GetMapping("/api/applications/groups/{groupId}")
+    public WebResponse<ApplicationGroupResponse> getApplicationGroupById(@PathVariable("groupId") Long groupId) {
+        return WebResponse.<ApplicationGroupResponse>builder()
+                .data(applicationGroupService.getApplicationGroupById(groupId)).build();
     }
 
-    @PutMapping(path = "/api/applications/groups/{group_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<ApplicationGroupResponse> updateApplicationGroup(@PathVariable("group_id") Long groupId, @RequestBody @Valid ApplicationGroupRequest req) {
-        ApplicationGroupResponse updatedApplicationGroup = applicationGroupService.updateApplicationGroup(groupId, req);
-        return WebResponse.<ApplicationGroupResponse>builder().data(updatedApplicationGroup).build();
+    @PutMapping("/api/applications/groups/{groupId}")
+    public WebResponse<ApplicationGroupResponse> updateApplicationGroup(@PathVariable("groupId") Long groupId,
+            @RequestBody @Valid ApplicationGroupRequest req) {
+        return WebResponse.<ApplicationGroupResponse>builder()
+                .data(applicationGroupService.updateApplicationGroup(groupId, req)).build();
     }
 
-    @DeleteMapping(path = "/api/applications/groups/{group_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<String> deleteApplication(@PathVariable("group_id") Long groupId) {
-        String response = applicationGroupService.deleteApplicationGroup(groupId);
-        return WebResponse.<String>builder().data(response).build();
+    @DeleteMapping("/api/applications/groups/{groupId}")
+    public WebResponse<String> deleteApplicationGroup(@PathVariable("groupId") Long groupId) {
+        return WebResponse.<String>builder().data(applicationGroupService.deleteApplicationGroup(groupId)).build();
     }
 }

@@ -1,6 +1,5 @@
 package farizrifkyb.mini_cmdb.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,14 +18,14 @@ public class GroupIpController {
 
     private final GroupIpService groupIpService;
 
-    @PostMapping(path = "/api/groups/{group_id}/ips", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<String> assignIp(@PathVariable("group_id") Long groupId,
+    @PostMapping("/api/groups/{groupId}/ips")
+    public WebResponse<String> assignIp(@PathVariable("groupId") Long groupId,
             @RequestBody @Valid GroupIpRequest req) {
         return WebResponse.<String>builder().data(groupIpService.assignIp(groupId, req)).build();
     }
 
-    @DeleteMapping(path = "/api/groups/{group_id}/ips", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<String> removeIp(@PathVariable("group_id") Long groupId,
+    @DeleteMapping("/api/groups/{groupId}/ips")
+    public WebResponse<String> removeIp(@PathVariable("groupId") Long groupId,
             @RequestBody @Valid GroupIpRequest req) {
         return WebResponse.<String>builder().data(groupIpService.removeIp(groupId, req)).build();
     }

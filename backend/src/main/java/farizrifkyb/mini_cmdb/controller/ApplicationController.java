@@ -2,7 +2,6 @@ package farizrifkyb.mini_cmdb.controller;
 
 import java.util.List;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,34 +24,29 @@ public class ApplicationController {
 
     private final ApplicationService applicationService;
 
-    @PostMapping(path = "/api/applications", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/api/applications")
     public WebResponse<Application> createApplication(@RequestBody @Valid ApplicationRequest req) {
-        Application newApplication = applicationService.createApplication(req);
-        return WebResponse.<Application>builder().data(newApplication).build();
+        return WebResponse.<Application>builder().data(applicationService.createApplication(req)).build();
     }
 
-    @GetMapping(path = "/api/applications", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/applications")
     public WebResponse<List<Application>> getApplications() {
-        List<Application> listApplications = applicationService.getApplications();
-        return WebResponse.<List<Application>>builder().data(listApplications).build();
+        return WebResponse.<List<Application>>builder().data(applicationService.getApplications()).build();
     }
 
-    @GetMapping(path = "/api/applications/{application_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<Application> getApplicationById(@PathVariable("application_id") Long applicationId) {
-        Application application = applicationService.getApplicationById(applicationId);
-        return WebResponse.<Application>builder().data(application).build();
+    @GetMapping("/api/applications/{applicationId}")
+    public WebResponse<Application> getApplicationById(@PathVariable("applicationId") Long applicationId) {
+        return WebResponse.<Application>builder().data(applicationService.getApplicationById(applicationId)).build();
     }
 
-    @PutMapping(path = "/api/applications/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<Application> updateApplication(@PathVariable("id") Long id,
+    @PutMapping("/api/applications/{applicationId}")
+    public WebResponse<Application> updateApplication(@PathVariable("applicationId") Long applicationId,
             @RequestBody @Valid ApplicationRequest req) {
-        Application updatedApplication = applicationService.updateApplication(id, req);
-        return WebResponse.<Application>builder().data(updatedApplication).build();
+        return WebResponse.<Application>builder().data(applicationService.updateApplication(applicationId, req)).build();
     }
 
-    @DeleteMapping(path = "/api/applications/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<String> deleteApplication(@PathVariable("id") Long id) {
-        String response = applicationService.deleteApplication(id);
-        return WebResponse.<String>builder().data(response).build();
+    @DeleteMapping("/api/applications/{applicationId}")
+    public WebResponse<String> deleteApplication(@PathVariable("applicationId") Long applicationId) {
+        return WebResponse.<String>builder().data(applicationService.deleteApplication(applicationId)).build();
     }
 }

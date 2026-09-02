@@ -2,7 +2,6 @@ package farizrifkyb.mini_cmdb.controller;
 
 import java.util.List;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,32 +25,29 @@ public class IpController {
 
     private final IpService ipService;
 
-    @PostMapping(path = "/api/ips", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/api/ips")
     public WebResponse<IpResponse> createIp(@RequestBody @Valid IpRequest req) {
         return WebResponse.<IpResponse>builder().data(ipService.createIp(req)).build();
     }
 
-    @GetMapping(path = "/api/ips", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/ips")
     public WebResponse<List<IpDetailResponse>> getAllIps() {
-        List<IpDetailResponse> listIps = ipService.getAllIps();
-        return WebResponse.<List<IpDetailResponse>>builder().data(listIps).build();
+        return WebResponse.<List<IpDetailResponse>>builder().data(ipService.getAllIps()).build();
     }
 
-    @GetMapping(path = "/api/ips/{ipId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/ips/{ipId}")
     public WebResponse<Ip> getIpById(@PathVariable("ipId") Long IpId) {
-        Ip ip = ipService.getIpById(IpId);
-        return WebResponse.<Ip>builder().data(ip).build();
+        return WebResponse.<Ip>builder().data(ipService.getIpById(IpId)).build();
     }
 
-    @PutMapping(path = "/api/ips/{ipId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/api/ips/{ipId}")
     public WebResponse<Ip> updateIp(@PathVariable("ipId") Long IpId,
             @RequestBody @Valid IpRequest req) {
         return WebResponse.<Ip>builder().data(ipService.updateIp(IpId, req)).build();
     }
 
-    @DeleteMapping(path = "/api/ips/{ipId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/api/ips/{ipId}")
     public WebResponse<String> deleteIp(@PathVariable("ipId") Long ipId) {
-        String response = ipService.deleteIp(ipId);
-        return WebResponse.<String>builder().data(response).build();
+        return WebResponse.<String>builder().data(ipService.deleteIp(ipId)).build();
     }
 }
