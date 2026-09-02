@@ -50,7 +50,7 @@ const DashboardRecentApp = ({ recentApplications }: DashboardRecentAppProps) => 
                 </tr>
               ))
             ) : (
-              <NoDataTable colSpan={4} title='No recent applications' description='You have no recent applications' to='/applications' linkText='+ Add Application' />
+              <NoDataTable colSpan={5} title='No recent applications' description='You have no recent applications' to='/applications' linkText='+ Add Application' />
             )}
           </tbody>
         </table>

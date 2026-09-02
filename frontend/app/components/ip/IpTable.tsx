@@ -68,7 +68,7 @@ const IpTable = ({ ips }: IpTableProps) => {
               </tr>
             ))
           ) : (
-            <NoDataTable colSpan={5} to='/ips/new' title='No ip address found' description='There are currently no ips to display.' linkText='+ Add Ip' />
+            <NoDataTable colSpan={6} to='/ips/new' title='No ip address found' description='There are currently no ips to display.' linkText='+ Add Ip' />
           )}
         </tbody>
       </table>
