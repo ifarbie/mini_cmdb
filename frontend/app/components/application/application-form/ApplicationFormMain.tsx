@@ -23,13 +23,25 @@ const ApplicationFormMain = ({ mode, application }: ApplicationFormMainProps) =>
 
   const submittingText = isEdit ? 'Saving...' : 'Creating...';
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    if (!isEdit) {
+      return;
+    }
+
+    const confirmed = window.confirm('Are you sure you want to save these changes?');
+
+    if (!confirmed) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <main className='flex-1 bg-gray-50 p-8 text-gray-900'>
       <BackToButton to='/applications'>Applications</BackToButton>
 
       <PageHeader title={title} description={description} />
 
-      <fetcher.Form method={isEdit ? 'put' : 'post'} className='max-w-3xl rounded-xl border bg-white p-6'>
+      <fetcher.Form method={isEdit ? 'put' : 'post'} onSubmit={handleSubmit} className='max-w-3xl rounded-xl border bg-white p-6'>
         {/* Intent */}
         <input type='hidden' name='intent' value={isEdit ? 'update' : 'create'} />
 
@@ -53,11 +65,8 @@ const ApplicationFormMain = ({ mode, application }: ApplicationFormMainProps) =>
 
           <select id='environment' name='environment' defaultValue={application?.environment ?? ''} required className='w-full rounded-lg border bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-gray-300'>
             <option value=''>Select environment</option>
-
             <option value='Production'>Production</option>
-
             <option value='Development'>Development</option>
-
             <option value='Staging'>Staging</option>
           </select>
         </div>
@@ -70,9 +79,7 @@ const ApplicationFormMain = ({ mode, application }: ApplicationFormMainProps) =>
 
           <select id='status' name='status' defaultValue={application?.status ?? 'GOOD'} className='w-full rounded-lg border bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-gray-300'>
             <option value='GOOD'>Good</option>
-
             <option value='WARNING'>Warning</option>
-
             <option value='DOWN'>Down</option>
           </select>
         </div>
@@ -99,7 +106,7 @@ const ApplicationFormMain = ({ mode, application }: ApplicationFormMainProps) =>
             Cancel
           </Link>
 
-          <button type='submit' disabled={fetcher.state === 'submitting'} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
+          <button type='submit' disabled={fetcher.state === 'submitting'} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50'>
             {fetcher.state === 'submitting' ? submittingText : submitText}
           </button>
         </div>

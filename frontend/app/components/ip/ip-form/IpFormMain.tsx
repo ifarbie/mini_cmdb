@@ -47,7 +47,7 @@ const IpFormMain = ({ ip }: IpFormMainProps) => {
       <BackToButton to='/ips'>IP Addresses</BackToButton>
 
       <div className='mb-8'>
-        <h1 className='text-3xl font-bold'>{isEdit ? 'Edit IP Address' : 'Add IP Address'}</h1>
+        <h1 className='cursor-pointer text-3xl font-bold'>{isEdit ? 'Edit IP Address' : 'Add IP Address'}</h1>
 
         <p className='mt-2 text-sm text-gray-500'>{isEdit ? 'Update IP address information.' : 'Add a new IP address.'}</p>
       </div>

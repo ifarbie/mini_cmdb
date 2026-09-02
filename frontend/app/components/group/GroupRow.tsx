@@ -22,7 +22,7 @@ export default function GroupRow({ group, index }: GroupRowProps) {
       </td>
 
       <td className='px-6 py-4'>
-        <td className='font-medium'>{group.application.name}</td>
+        <div className='font-medium'>{group.application.name}</div>
 
         <div className='text-xs text-gray-500'>#{group.application.id}</div>
       </td>

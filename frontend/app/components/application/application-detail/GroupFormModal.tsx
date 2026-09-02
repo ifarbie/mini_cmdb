@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useFetcher } from 'react-router';
+import ConfirmButton from '~/components/ui/ConfirmButton';
 
 import type { ApplicationGroup } from '~/types/ApplicationGroup';
 
@@ -114,9 +115,12 @@ const GroupFormModal = ({ mode, applicationName, applicationId, group, isOpen, o
               Cancel
             </button>
 
-            <button type='submit' disabled={isSubmitting} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
+            {/* <button type='submit' disabled={isSubmitting} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
               {isSubmitting ? (isEdit ? 'Saving...' : 'Adding...') : isEdit ? 'Save Changes' : 'Add Group'}
-            </button>
+            </button> */}
+            <ConfirmButton isSubmitting={fetcher.state === 'submitting'} confirmMessage='Are you sure you want to save these changes?' submittingText={isEdit ? 'Saving...' : 'Adding...'}>
+              {isEdit ? 'Save Changes' : 'Add Group'}
+            </ConfirmButton>
           </div>
         </fetcher.Form>
       </div>

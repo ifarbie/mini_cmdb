@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFetcher } from 'react-router';
+import ConfirmButton from '~/components/ui/ConfirmButton';
 
 import type { Application } from '~/types/Application';
 
@@ -142,9 +143,7 @@ const ApplicationEditModal = ({ application, id, isOpen, onClose }: ApplicationE
               Cancel
             </button>
 
-            <button type='submit' disabled={fetcher.state === 'submitting'} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
-              {fetcher.state === 'submitting' ? 'Saving...' : 'Save Changes'}
-            </button>
+            <ConfirmButton isSubmitting={fetcher.state === 'submitting'} confirmMessage='Are you sure you want to save these changes?' submittingText="Saving...">Save Changes</ConfirmButton>
           </div>
         </fetcher.Form>
       </div>

@@ -1,4 +1,6 @@
 import { useFetcher } from 'react-router';
+import DeleteButton from '~/components/ui/DeleteButton';
+import EditButton from '~/components/ui/EditButton';
 import type { Application } from '~/types/Application';
 import type { ApplicationGroup } from '~/types/ApplicationGroup';
 
@@ -24,9 +26,7 @@ const GroupDetailHeader = ({ application, groupDetail, handleOpenEdit }: GroupDe
       </div>
 
       <div className='flex gap-3'>
-        <button onClick={handleOpenEdit} className='cursor-pointer rounded-lg border bg-white px-4 py-2 text-sm font-medium hover:bg-gray-50'>
-          Edit
-        </button>
+        <EditButton onClick={handleOpenEdit} />
 
         <deleteGroupFetcher.Form method='delete'>
           <input type='hidden' name='intent' value='delete-group' />
@@ -35,9 +35,7 @@ const GroupDetailHeader = ({ application, groupDetail, handleOpenEdit }: GroupDe
 
           <input type='hidden' name='applicationId' value={application.id} />
 
-          <button disabled={deleteGroupFetcher.state === 'submitting'} type='submit' className='cursor-pointer rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700'>
-            {deleteGroupFetcher.state === 'submitting' ? 'Deleting...' : 'Delete'}
-          </button>
+          <DeleteButton isSubmitting={deleteGroupFetcher.state === 'submitting'} />
         </deleteGroupFetcher.Form>
       </div>
     </div>

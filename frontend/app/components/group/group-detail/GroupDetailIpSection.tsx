@@ -1,4 +1,5 @@
 import { useFetcher } from 'react-router';
+import DeleteLink from '~/components/ui/DeleteLink';
 
 import type { Ip } from '~/types/Ip';
 
@@ -14,6 +15,7 @@ type FetcherResponse = {
 
 const GroupDetailIpSection = ({ groupId, setIsAddIpOpen, ips }: GroupDetailIpSectionProps) => {
   const removeIpFetcher = useFetcher<FetcherResponse>();
+  console.log(ips, "disiniii");
 
   return (
     <section>
@@ -65,9 +67,7 @@ const GroupDetailIpSection = ({ groupId, setIsAddIpOpen, ips }: GroupDetailIpSec
 
                       <input type='hidden' name='ipId' value={ip.id} />
 
-                      <button disabled={removeIpFetcher.state === 'submitting'} type='submit' className='cursor-pointer text-sm text-red-600 hover:underline disabled:cursor-not-allowed disabled:opacity-50'>
-                        {removeIpFetcher.state === 'submitting' ? 'Removing...' : 'Remove'}
-                      </button>
+                      <DeleteLink isSubmitting={removeIpFetcher.state === 'submitting'} textSize='text-sm' />
                     </removeIpFetcher.Form>
                   </td>
                 </tr>

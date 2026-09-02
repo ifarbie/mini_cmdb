@@ -1,4 +1,6 @@
 import { useFetcher } from 'react-router';
+import DeleteButton from '~/components/ui/DeleteButton';
+import EditButton from '~/components/ui/EditButton';
 
 type ApplicationDetailHeaderProps = {
   id: string | undefined;
@@ -18,18 +20,14 @@ const ApplicationDetailHeader = ({ id, name, handleOpenEdit }: ApplicationDetail
       </div>
 
       <div className='flex gap-3'>
-        <button onClick={handleOpenEdit} className='cursor-pointer rounded-lg border bg-white px-4 py-2 text-sm font-medium hover:bg-gray-50'>
-          Edit
-        </button>
+        <EditButton onClick={handleOpenEdit} />
 
         <removeAppFetcher.Form method='delete'>
           <input type='hidden' name='intent' value='remove-app' />
 
           <input type='hidden' name='applicationId' value={id} />
 
-          <button disabled={removeAppFetcher.state === 'submitting'} type='submit' className='cursor-pointer rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700'>
-            {removeAppFetcher.state === 'submitting' ? 'Deleting...' : 'Delete'}
-          </button>
+          <DeleteButton isSubmitting={removeAppFetcher.state === 'submitting'} />
         </removeAppFetcher.Form>
       </div>
     </div>
