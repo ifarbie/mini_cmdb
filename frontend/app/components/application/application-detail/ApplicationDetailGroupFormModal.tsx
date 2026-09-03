@@ -18,7 +18,6 @@ const ApplicationDetailGroupFormModal = ({ mode, applicationName, applicationId,
   const fetcher = useFetcher();
 
   const isEdit = mode === 'edit';
-  const isSubmitting = fetcher.state === 'submitting';
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -115,7 +114,7 @@ const ApplicationDetailGroupFormModal = ({ mode, applicationName, applicationId,
               Cancel
             </button>
 
-            <ConfirmButton isSubmitting={fetcher.state === 'submitting'} confirmMessage='Are you sure you want to save these changes?' submittingText={isEdit ? 'Saving...' : 'Adding...'}>
+            <ConfirmButton isSubmitting={fetcher.state === 'submitting'} confirmMessage='Are you sure you want to save these changes?' submittingText={isEdit ? 'Saving...' : 'Adding...'} isEdit={isEdit}>
               {isEdit ? 'Save Changes' : 'Add Group'}
             </ConfirmButton>
           </div>

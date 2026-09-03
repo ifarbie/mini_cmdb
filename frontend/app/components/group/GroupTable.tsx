@@ -18,7 +18,6 @@ export default function GroupTable({ groups }: GroupTableProps) {
 
             <th className='px-6 py-4 text-sm font-medium text-gray-500'>Application</th>
 
-            <th className='px-6 py-4 text-sm font-medium text-gray-500'>Description</th>
 
             <th className='px-6 py-4 text-sm font-medium text-gray-500'>IPs Count</th>
 
@@ -30,7 +29,7 @@ export default function GroupTable({ groups }: GroupTableProps) {
           {groups.length > 0 ? (
             groups.map((group, index) => <GroupRow key={group.id} index={index+1} group={group} />)
           ) : (
-            <NoDataTable colSpan={6} to='/groups/new' title='No application groups found' description='There are currently no application group to display.' linkText='+ Add Application Group' />
+            <NoDataTable colSpan={5} to='/groups/new' title='No application groups found' description='There are currently no application group to display.' linkText='+ Add Application Group' />
           )}
         </tbody>
       </table>

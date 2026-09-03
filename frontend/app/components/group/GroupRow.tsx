@@ -27,8 +27,6 @@ export default function GroupRow({ group, index }: GroupRowProps) {
         <div className='text-xs text-gray-500'>#{group.application.id}</div>
       </td>
 
-      <td className='max-w-xs truncate px-6 py-4 text-sm text-gray-500'>{group.description || '-'}</td>
-
       <td className='px-6 py-4'>{group.ips.length}</td>
 
       <td className='px-6 py-4'>
