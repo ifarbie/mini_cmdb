@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useFetcher } from 'react-router';
 
 import BackToButton from '~/components/ui/BackToButton';
+import ConfirmButton from '~/components/ui/ConfirmButton';
 
 type IpFormMainProps = {
   ip?: {
@@ -110,7 +111,7 @@ const IpFormMain = ({ ip }: IpFormMainProps) => {
             Cancel
           </Link>
 
-          <button type='submit' disabled={isSubmitting || Boolean(ipError)} className='rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
+          <button type='submit' disabled={isSubmitting || Boolean(ipError)} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
             {isSubmitting ? (isEdit ? 'Updating...' : 'Adding...') : isEdit ? 'Update IP' : 'Add IP'}
           </button>
         </div>

@@ -1,5 +1,7 @@
 package farizrifkyb.mini_cmdb.model.response;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +21,6 @@ public class ApplicationResponse {
     private String description;
 
     private String environment;
+
+    private List<ApplicationGroupResponse> groups;
 }

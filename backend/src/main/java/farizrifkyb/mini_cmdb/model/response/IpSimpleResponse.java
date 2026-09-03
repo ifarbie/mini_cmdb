@@ -1,7 +1,5 @@
 package farizrifkyb.mini_cmdb.model.response;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class IpDetailResponse {
-    private Long id;
-    private String ipAddress;
-    private String hostname;
-    private String description;
+public class IpSimpleResponse {
+    private Long id;  
+    
+    private String ipAddress;  
 
-    private List<IpGroupResponse> groups;
+    private String hostname;
+
+    private String description;
 }

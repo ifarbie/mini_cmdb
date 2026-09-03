@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import farizrifkyb.mini_cmdb.entity.Ip;
+import farizrifkyb.mini_cmdb.mapper.IpMapper;
 import farizrifkyb.mini_cmdb.model.request.IpRequest;
-import farizrifkyb.mini_cmdb.model.response.IpDetailResponse;
-import farizrifkyb.mini_cmdb.model.response.IpGroupResponse;
+import farizrifkyb.mini_cmdb.model.response.ApplicationGroupSimpleResponse;
 import farizrifkyb.mini_cmdb.model.response.IpResponse;
+import farizrifkyb.mini_cmdb.model.response.IpSimpleResponse;
 import farizrifkyb.mini_cmdb.repository.IpRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -18,17 +19,19 @@ public class IpService {
 
     private final IpRepository ipRepository;
 
-    public List<IpDetailResponse> getAllIps() {
+    private final IpMapper ipMapper;
+
+    public List<IpResponse> getAllIps() {
         return ipRepository.findAll()
                 .stream()
-                .map(ip -> new IpDetailResponse(
+                .map(ip -> new IpResponse(
                         ip.getId(),
                         ip.getIpAddress(),
                         ip.getHostname(),
                         ip.getDescription(),
                         ip.getGroups()
                                 .stream()
-                                .map(group -> new IpGroupResponse(
+                                .map(group -> new ApplicationGroupSimpleResponse(
                                         group.getId(),
                                         group.getName(),
                                         group.getDescription()))
@@ -36,11 +39,13 @@ public class IpService {
                 .toList();
     }
 
-    public Ip getIpById(Long id) {
-        return ipRepository.findById(id).orElseThrow(() -> new RuntimeException("Ip not found"));
+    public IpResponse getIpById(Long id) {
+        Ip ip = ipRepository.findById(id).orElseThrow(() -> new RuntimeException("Ip not found"));
+
+        return ipMapper.toResponse(ip);
     }
 
-    public IpResponse createIp(IpRequest req) {
+    public IpSimpleResponse createIp(IpRequest req) {
         Ip newIp = new Ip();
 
         newIp.setIpAddress(req.getIpAddress());
@@ -49,10 +54,14 @@ public class IpService {
 
         ipRepository.save(newIp);
 
-        return new IpResponse(req.getIpAddress(), req.getHostname(), req.getDescription());
+        return new IpSimpleResponse(
+                newIp.getId(),
+                newIp.getIpAddress(),
+                newIp.getHostname(),
+                newIp.getDescription());
     }
 
-    public Ip updateIp(Long ipId, IpRequest req) {
+    public IpSimpleResponse updateIp(Long ipId, IpRequest req) {
         Ip ip = ipRepository.findById(ipId)
                 .orElseThrow(() -> new RuntimeException("Ip not found"));
 
@@ -62,7 +71,7 @@ public class IpService {
 
         ipRepository.save(ip);
 
-        return ip;
+        return ipMapper.toSimpleResponse(ip);
     }
 
     public String deleteIp(Long ipId) {

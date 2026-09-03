@@ -10,8 +10,8 @@ import type { ApplicationGroup } from '~/types/ApplicationGroup';
 import ApplicationDetailGroups from './ApplicationDetailGroups';
 import ApplicationDetailHeader from './ApplicationDetailHeader';
 import ApplicationDetailStatistic from './ApplicationDetailStatistic';
-import ApplicationEditModal from './ApplicationEditModal';
-import GroupFormModal from './GroupFormModal';
+import ApplicationDetailGroupFormModal from './ApplicationDetailGroupFormModal';
+import ApplicationDetailEditModal from './ApplicationDetailEditModal';
 
 type ApplicationDetailMainProps = {
   application: Application;
@@ -50,9 +50,16 @@ const ApplicationDetailMain = ({ application }: ApplicationDetailMainProps) => {
 
       <ApplicationDetailGroups groups={application.groups} handleOpenAddGroup={handleOpenAddGroup} handleOpenEditGroup={handleOpenEditGroup} />
 
-      <ApplicationEditModal application={application} id={id} isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} />
+      <ApplicationDetailEditModal application={application} id={id} isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} />
 
-      <GroupFormModal mode={selectedGroup ? 'edit' : 'create'} applicationName={application.name} applicationId={application.id} group={selectedGroup ?? undefined} isOpen={isGroupModalOpen} onClose={handleCloseGroupModal} />
+      <ApplicationDetailGroupFormModal
+        mode={selectedGroup ? 'edit' : 'create'}
+        applicationName={application.name}
+        applicationId={application.id}
+        group={selectedGroup ?? undefined}
+        isOpen={isGroupModalOpen}
+        onClose={handleCloseGroupModal}
+      />
     </main>
   );
 };

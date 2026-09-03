@@ -4,14 +4,14 @@ import ConfirmButton from '~/components/ui/ConfirmButton';
 
 import type { Application } from '~/types/Application';
 
-type ApplicationEditModalProps = {
+type ApplicationDetailEditModalProps = {
   application: Application;
   id?: string;
   isOpen: boolean;
   onClose: () => void;
 };
 
-const ApplicationEditModal = ({ application, id, isOpen, onClose }: ApplicationEditModalProps) => {
+const ApplicationDetailEditModal = ({ application, id, isOpen, onClose }: ApplicationDetailEditModalProps) => {
   const fetcher = useFetcher();
 
   const [name, setName] = useState(application.name);
@@ -143,7 +143,9 @@ const ApplicationEditModal = ({ application, id, isOpen, onClose }: ApplicationE
               Cancel
             </button>
 
-            <ConfirmButton isSubmitting={fetcher.state === 'submitting'} confirmMessage='Are you sure you want to save these changes?' submittingText="Saving...">Save Changes</ConfirmButton>
+            <ConfirmButton isSubmitting={fetcher.state === 'submitting'} confirmMessage='Are you sure you want to save these changes?' submittingText='Saving...'>
+              Save Changes
+            </ConfirmButton>
           </div>
         </fetcher.Form>
       </div>
@@ -151,4 +153,4 @@ const ApplicationEditModal = ({ application, id, isOpen, onClose }: ApplicationE
   );
 };
 
-export default ApplicationEditModal;
+export default ApplicationDetailEditModal;

@@ -9,10 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class IpGroupResponse {
+public class ApplicationSimpleResponse {
     private Long id;
 
     private String name;
-    
+
+    private String status;
+
     private String description;
+
+    private String environment;
 }

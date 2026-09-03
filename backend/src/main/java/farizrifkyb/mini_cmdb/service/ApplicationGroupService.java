@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 
 import farizrifkyb.mini_cmdb.entity.Application;
 import farizrifkyb.mini_cmdb.entity.ApplicationGroup;
+import farizrifkyb.mini_cmdb.mapper.ApplicationGroupMapper;
 import farizrifkyb.mini_cmdb.model.request.ApplicationGroupRequest;
 import farizrifkyb.mini_cmdb.model.response.ApplicationGroupResponse;
-import farizrifkyb.mini_cmdb.model.response.ApplicationResponse;
+import farizrifkyb.mini_cmdb.model.response.ApplicationGroupSimpleResponse;
 import farizrifkyb.mini_cmdb.repository.ApplicationGroupRepository;
 import farizrifkyb.mini_cmdb.repository.ApplicationRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,9 @@ public class ApplicationGroupService {
         private final ApplicationGroupRepository applicationGroupRepository;
         private final ApplicationRepository applicationRepository;
 
-        public ApplicationGroup createApplicationGroup(Long applicationId, ApplicationGroupRequest req) {
+        private final ApplicationGroupMapper applicationGroupMapper;
+
+        public ApplicationGroupSimpleResponse createApplicationGroup(Long applicationId, ApplicationGroupRequest req) {
                 Application application = applicationRepository.findById(applicationId)
                                 .orElseThrow(() -> new RuntimeException("Application not found"));
 
@@ -31,23 +34,13 @@ public class ApplicationGroupService {
 
                 applicationGroupRepository.save(group);
 
-                return group;
+                return applicationGroupMapper.toSimpleResponse(group);
         }
 
         public List<ApplicationGroupResponse> getApplicationGroups() {
                 return applicationGroupRepository.findAll()
                                 .stream()
-                                .map(group -> new ApplicationGroupResponse(
-                                                group.getId(),
-                                                group.getName(),
-                                                group.getDescription(),
-                                                new ApplicationResponse(
-                                                                group.getApplication().getId(),
-                                                                group.getApplication().getName(),
-                                                                group.getApplication().getStatus(),
-                                                                group.getApplication().getDescription(),
-                                                                group.getApplication().getEnvironment()),
-                                                group.getIps()))
+                                .map(applicationGroupMapper::toResponse)
                                 .toList();
         }
 
@@ -55,22 +48,10 @@ public class ApplicationGroupService {
                 ApplicationGroup group = applicationGroupRepository.findById(groupId)
                                 .orElseThrow(() -> new RuntimeException("Application Group not found"));
 
-                return new ApplicationGroupResponse(
-                                group.getId(),
-                                group.getName(),
-                                group.getDescription(),
-                                new ApplicationResponse(
-                                                group.getApplication().getId(),
-                                                group.getApplication().getName(),
-                                                group.getApplication().getStatus(),
-                                                group.getApplication().getDescription(),
-                                                group.getApplication().getEnvironment()),
-                                group.getIps()
-
-                );
+                return applicationGroupMapper.toResponse(group);
         }
 
-        public ApplicationGroupResponse updateApplicationGroup(Long groupId, ApplicationGroupRequest req) {
+        public ApplicationGroupSimpleResponse updateApplicationGroup(Long groupId, ApplicationGroupRequest req) {
                 ApplicationGroup group = applicationGroupRepository.findById(groupId)
                                 .orElseThrow(() -> new RuntimeException("Application Group not found"));
 
@@ -79,17 +60,7 @@ public class ApplicationGroupService {
 
                 applicationGroupRepository.save(group);
 
-                return new ApplicationGroupResponse(
-                                group.getId(),
-                                group.getName(),
-                                group.getDescription(),
-                                new ApplicationResponse(
-                                                group.getApplication().getId(),
-                                                group.getApplication().getName(),
-                                                group.getApplication().getStatus(),
-                                                group.getApplication().getDescription(),
-                                                group.getApplication().getEnvironment()),
-                                group.getIps());
+                return applicationGroupMapper.toSimpleResponse(group);
         }
 
         public String deleteApplicationGroup(Long groupId) {

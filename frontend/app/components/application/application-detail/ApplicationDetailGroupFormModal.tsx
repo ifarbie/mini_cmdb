@@ -5,7 +5,7 @@ import ConfirmButton from '~/components/ui/ConfirmButton';
 
 import type { ApplicationGroup } from '~/types/ApplicationGroup';
 
-type GroupFormModalProps = {
+type ApplicationDetailGroupFormModalProps = {
   mode: 'create' | 'edit';
   applicationName?: string;
   applicationId?: string | number;
@@ -14,7 +14,7 @@ type GroupFormModalProps = {
   onClose: () => void;
 };
 
-const GroupFormModal = ({ mode, applicationName, applicationId, group, isOpen, onClose }: GroupFormModalProps) => {
+const ApplicationDetailGroupFormModal = ({ mode, applicationName, applicationId, group, isOpen, onClose }: ApplicationDetailGroupFormModalProps) => {
   const fetcher = useFetcher();
 
   const isEdit = mode === 'edit';
@@ -59,7 +59,7 @@ const GroupFormModal = ({ mode, applicationName, applicationId, group, isOpen, o
             <p className='mt-1 text-sm text-gray-500'>{modalDescription}</p>
           </div>
 
-          <button type='button' onClick={onClose} className='text-xl text-gray-400 hover:text-gray-900'>
+          <button type='button' onClick={onClose} className='cursor-pointer text-xl text-gray-400 hover:text-gray-900'>
             ×
           </button>
         </div>
@@ -115,9 +115,6 @@ const GroupFormModal = ({ mode, applicationName, applicationId, group, isOpen, o
               Cancel
             </button>
 
-            {/* <button type='submit' disabled={isSubmitting} className='cursor-pointer rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50'>
-              {isSubmitting ? (isEdit ? 'Saving...' : 'Adding...') : isEdit ? 'Save Changes' : 'Add Group'}
-            </button> */}
             <ConfirmButton isSubmitting={fetcher.state === 'submitting'} confirmMessage='Are you sure you want to save these changes?' submittingText={isEdit ? 'Saving...' : 'Adding...'}>
               {isEdit ? 'Save Changes' : 'Add Group'}
             </ConfirmButton>
@@ -128,4 +125,4 @@ const GroupFormModal = ({ mode, applicationName, applicationId, group, isOpen, o
   );
 };
 
-export default GroupFormModal;
+export default ApplicationDetailGroupFormModal;

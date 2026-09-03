@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import farizrifkyb.mini_cmdb.entity.Ip;
 import farizrifkyb.mini_cmdb.model.request.IpRequest;
-import farizrifkyb.mini_cmdb.model.response.IpDetailResponse;
 import farizrifkyb.mini_cmdb.model.response.IpResponse;
+import farizrifkyb.mini_cmdb.model.response.IpSimpleResponse;
 import farizrifkyb.mini_cmdb.model.response.WebResponse;
 import farizrifkyb.mini_cmdb.service.IpService;
 import jakarta.validation.Valid;
@@ -26,24 +25,24 @@ public class IpController {
     private final IpService ipService;
 
     @PostMapping("/api/ips")
-    public WebResponse<IpResponse> createIp(@RequestBody @Valid IpRequest req) {
-        return WebResponse.<IpResponse>builder().data(ipService.createIp(req)).build();
+    public WebResponse<IpSimpleResponse> createIp(@RequestBody @Valid IpRequest req) {
+        return WebResponse.<IpSimpleResponse>builder().data(ipService.createIp(req)).build();
     }
 
     @GetMapping("/api/ips")
-    public WebResponse<List<IpDetailResponse>> getAllIps() {
-        return WebResponse.<List<IpDetailResponse>>builder().data(ipService.getAllIps()).build();
+    public WebResponse<List<IpResponse>> getAllIps() {
+        return WebResponse.<List<IpResponse>>builder().data(ipService.getAllIps()).build();
     }
 
     @GetMapping("/api/ips/{ipId}")
-    public WebResponse<Ip> getIpById(@PathVariable("ipId") Long IpId) {
-        return WebResponse.<Ip>builder().data(ipService.getIpById(IpId)).build();
+    public WebResponse<IpResponse> getIpById(@PathVariable("ipId") Long IpId) {
+        return WebResponse.<IpResponse>builder().data(ipService.getIpById(IpId)).build();
     }
 
     @PutMapping("/api/ips/{ipId}")
-    public WebResponse<Ip> updateIp(@PathVariable("ipId") Long IpId,
+    public WebResponse<IpSimpleResponse> updateIp(@PathVariable("ipId") Long IpId,
             @RequestBody @Valid IpRequest req) {
-        return WebResponse.<Ip>builder().data(ipService.updateIp(IpId, req)).build();
+        return WebResponse.<IpSimpleResponse>builder().data(ipService.updateIp(IpId, req)).build();
     }
 
     @DeleteMapping("/api/ips/{ipId}")

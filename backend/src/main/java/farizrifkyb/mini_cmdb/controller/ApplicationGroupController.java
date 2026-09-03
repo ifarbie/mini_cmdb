@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import farizrifkyb.mini_cmdb.entity.ApplicationGroup;
 import farizrifkyb.mini_cmdb.model.request.ApplicationGroupRequest;
 import farizrifkyb.mini_cmdb.model.response.ApplicationGroupResponse;
+import farizrifkyb.mini_cmdb.model.response.ApplicationGroupSimpleResponse;
 import farizrifkyb.mini_cmdb.model.response.WebResponse;
 import farizrifkyb.mini_cmdb.service.ApplicationGroupService;
 import jakarta.validation.Valid;
@@ -25,9 +25,9 @@ public class ApplicationGroupController {
     private final ApplicationGroupService applicationGroupService;
 
     @PostMapping("/api/applications/{applicationId}/groups")
-    public WebResponse<ApplicationGroup> createApplicationGroup(@PathVariable("applicationId") Long applicationId,
+    public WebResponse<ApplicationGroupSimpleResponse> createApplicationGroup(@PathVariable("applicationId") Long applicationId,
             @RequestBody @Valid ApplicationGroupRequest req) {
-        return WebResponse.<ApplicationGroup>builder()
+        return WebResponse.<ApplicationGroupSimpleResponse>builder()
                 .data(applicationGroupService.createApplicationGroup(applicationId, req)).build();
     }
 
@@ -44,9 +44,9 @@ public class ApplicationGroupController {
     }
 
     @PutMapping("/api/applications/groups/{groupId}")
-    public WebResponse<ApplicationGroupResponse> updateApplicationGroup(@PathVariable("groupId") Long groupId,
+    public WebResponse<ApplicationGroupSimpleResponse> updateApplicationGroup(@PathVariable("groupId") Long groupId,
             @RequestBody @Valid ApplicationGroupRequest req) {
-        return WebResponse.<ApplicationGroupResponse>builder()
+        return WebResponse.<ApplicationGroupSimpleResponse>builder()
                 .data(applicationGroupService.updateApplicationGroup(groupId, req)).build();
     }
 

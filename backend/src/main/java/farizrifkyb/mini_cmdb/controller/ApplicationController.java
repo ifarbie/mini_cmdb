@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import farizrifkyb.mini_cmdb.entity.Application;
 import farizrifkyb.mini_cmdb.model.request.ApplicationRequest;
+import farizrifkyb.mini_cmdb.model.response.ApplicationResponse;
+import farizrifkyb.mini_cmdb.model.response.ApplicationSimpleResponse;
 import farizrifkyb.mini_cmdb.model.response.WebResponse;
 import farizrifkyb.mini_cmdb.service.ApplicationService;
 import jakarta.validation.Valid;
@@ -25,24 +26,24 @@ public class ApplicationController {
     private final ApplicationService applicationService;
 
     @PostMapping("/api/applications")
-    public WebResponse<Application> createApplication(@RequestBody @Valid ApplicationRequest req) {
-        return WebResponse.<Application>builder().data(applicationService.createApplication(req)).build();
+    public WebResponse<ApplicationSimpleResponse> createApplication(@RequestBody @Valid ApplicationRequest req) {
+        return WebResponse.<ApplicationSimpleResponse>builder().data(applicationService.createApplication(req)).build();
     }
 
     @GetMapping("/api/applications")
-    public WebResponse<List<Application>> getApplications() {
-        return WebResponse.<List<Application>>builder().data(applicationService.getApplications()).build();
+    public WebResponse<List<ApplicationResponse>> getApplications() {
+        return WebResponse.<List<ApplicationResponse>>builder().data(applicationService.getApplications()).build();
     }
 
     @GetMapping("/api/applications/{applicationId}")
-    public WebResponse<Application> getApplicationById(@PathVariable("applicationId") Long applicationId) {
-        return WebResponse.<Application>builder().data(applicationService.getApplicationById(applicationId)).build();
+    public WebResponse<ApplicationResponse> getApplicationById(@PathVariable("applicationId") Long applicationId) {
+        return WebResponse.<ApplicationResponse>builder().data(applicationService.getApplicationById(applicationId)).build();
     }
 
     @PutMapping("/api/applications/{applicationId}")
-    public WebResponse<Application> updateApplication(@PathVariable("applicationId") Long applicationId,
+    public WebResponse<ApplicationSimpleResponse> updateApplication(@PathVariable("applicationId") Long applicationId,
             @RequestBody @Valid ApplicationRequest req) {
-        return WebResponse.<Application>builder().data(applicationService.updateApplication(applicationId, req)).build();
+        return WebResponse.<ApplicationSimpleResponse>builder().data(applicationService.updateApplication(applicationId, req)).build();
     }
 
     @DeleteMapping("/api/applications/{applicationId}")
