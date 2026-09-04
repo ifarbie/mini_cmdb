@@ -28,16 +28,12 @@ public class ApplicationService {
     public ApplicationResponse getApplicationById(Long id) {
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Application Not Found"));
+                
         return applicationMapper.toResponse(application);
     }
 
     public ApplicationSimpleResponse createApplication(ApplicationRequest req) {
-        Application newApplication = new Application();
-
-        newApplication.setName(req.getName());
-        newApplication.setEnvironment(req.getEnvironment());
-        newApplication.setStatus(req.getStatus());
-        newApplication.setDescription(req.getDescription());
+        Application newApplication = applicationMapper.toEntity(req);
 
         applicationRepository.save(newApplication);
 
@@ -48,10 +44,7 @@ public class ApplicationService {
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Application Not Found"));
 
-        application.setName(req.getName());
-        application.setEnvironment(req.getEnvironment());
-        application.setStatus(req.getStatus());
-        application.setDescription(req.getDescription());
+        applicationMapper.updateEntity(application, req);
 
         applicationRepository.save(application);
 
