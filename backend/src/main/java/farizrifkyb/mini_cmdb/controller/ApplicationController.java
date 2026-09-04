@@ -36,18 +36,20 @@ public class ApplicationController {
     }
 
     @GetMapping("/api/applications/{applicationId}")
-    public WebResponse<ApplicationResponse> getApplicationById(@PathVariable("applicationId") Long applicationId) {
-        return WebResponse.<ApplicationResponse>builder().data(applicationService.getApplicationById(applicationId)).build();
+    public WebResponse<ApplicationResponse> getApplicationById(@PathVariable Long applicationId) {
+        return WebResponse.<ApplicationResponse>builder().data(applicationService.getApplicationById(applicationId))
+                .build();
     }
 
     @PutMapping("/api/applications/{applicationId}")
-    public WebResponse<ApplicationSimpleResponse> updateApplication(@PathVariable("applicationId") Long applicationId,
+    public WebResponse<ApplicationSimpleResponse> updateApplication(@PathVariable Long applicationId,
             @RequestBody @Valid ApplicationRequest req) {
-        return WebResponse.<ApplicationSimpleResponse>builder().data(applicationService.updateApplication(applicationId, req)).build();
+        return WebResponse.<ApplicationSimpleResponse>builder()
+                .data(applicationService.updateApplication(applicationId, req)).build();
     }
 
     @DeleteMapping("/api/applications/{applicationId}")
-    public WebResponse<String> deleteApplication(@PathVariable("applicationId") Long applicationId) {
+    public WebResponse<String> deleteApplication(@PathVariable Long applicationId) {
         return WebResponse.<String>builder().data(applicationService.deleteApplication(applicationId)).build();
     }
 }

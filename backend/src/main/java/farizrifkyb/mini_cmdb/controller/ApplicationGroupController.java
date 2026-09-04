@@ -38,20 +38,20 @@ public class ApplicationGroupController {
     }
 
     @GetMapping("/api/applications/groups/{groupId}")
-    public WebResponse<ApplicationGroupResponse> getApplicationGroupById(@PathVariable("groupId") Long groupId) {
+    public WebResponse<ApplicationGroupResponse> getApplicationGroupById(@PathVariable Long groupId) {
         return WebResponse.<ApplicationGroupResponse>builder()
                 .data(applicationGroupService.getApplicationGroupById(groupId)).build();
     }
 
     @PutMapping("/api/applications/groups/{groupId}")
-    public WebResponse<ApplicationGroupSimpleResponse> updateApplicationGroup(@PathVariable("groupId") Long groupId,
+    public WebResponse<ApplicationGroupSimpleResponse> updateApplicationGroup(@PathVariable Long groupId,
             @RequestBody @Valid ApplicationGroupRequest req) {
         return WebResponse.<ApplicationGroupSimpleResponse>builder()
                 .data(applicationGroupService.updateApplicationGroup(groupId, req)).build();
     }
 
     @DeleteMapping("/api/applications/groups/{groupId}")
-    public WebResponse<String> deleteApplicationGroup(@PathVariable("groupId") Long groupId) {
+    public WebResponse<String> deleteApplicationGroup(@PathVariable Long groupId) {
         return WebResponse.<String>builder().data(applicationGroupService.deleteApplicationGroup(groupId)).build();
     }
 }

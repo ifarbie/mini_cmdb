@@ -35,12 +35,12 @@ public class IpController {
     }
 
     @GetMapping("/api/ips/{ipId}")
-    public WebResponse<IpResponse> getIpById(@PathVariable("ipId") Long IpId) {
+    public WebResponse<IpResponse> getIpById(@PathVariable Long IpId) {
         return WebResponse.<IpResponse>builder().data(ipService.getIpById(IpId)).build();
     }
 
     @PutMapping("/api/ips/{ipId}")
-    public WebResponse<IpSimpleResponse> updateIp(@PathVariable("ipId") Long IpId,
+    public WebResponse<IpSimpleResponse> updateIp(@PathVariable Long IpId,
             @RequestBody @Valid IpRequest req) {
         return WebResponse.<IpSimpleResponse>builder().data(ipService.updateIp(IpId, req)).build();
     }

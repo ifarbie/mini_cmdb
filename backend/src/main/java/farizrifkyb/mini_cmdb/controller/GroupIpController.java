@@ -19,13 +19,13 @@ public class GroupIpController {
     private final GroupIpService groupIpService;
 
     @PostMapping("/api/groups/{groupId}/ips")
-    public WebResponse<String> assignIp(@PathVariable("groupId") Long groupId,
+    public WebResponse<String> assignIp(@PathVariable Long groupId,
             @RequestBody @Valid GroupIpRequest req) {
         return WebResponse.<String>builder().data(groupIpService.assignIp(groupId, req)).build();
     }
 
     @DeleteMapping("/api/groups/{groupId}/ips")
-    public WebResponse<String> removeIp(@PathVariable("groupId") Long groupId,
+    public WebResponse<String> removeIp(@PathVariable Long groupId,
             @RequestBody @Valid GroupIpRequest req) {
         return WebResponse.<String>builder().data(groupIpService.removeIp(groupId, req)).build();
     }
