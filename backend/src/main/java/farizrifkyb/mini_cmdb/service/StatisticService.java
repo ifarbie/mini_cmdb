@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class StatisticService {
+    
     private final ApplicationRepository applicationRepository;
     private final ApplicationGroupRepository applicationGroupRepository;
     private final IpRepository ipRepository;

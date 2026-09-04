@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import farizrifkyb.mini_cmdb.entity.Application;
 import farizrifkyb.mini_cmdb.entity.ApplicationGroup;
+import farizrifkyb.mini_cmdb.exception.ResourceNotFoundException;
 import farizrifkyb.mini_cmdb.mapper.ApplicationGroupMapper;
 import farizrifkyb.mini_cmdb.model.request.ApplicationGroupRequest;
 import farizrifkyb.mini_cmdb.model.response.ApplicationGroupResponse;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ApplicationGroupService {
+
         private final ApplicationGroupRepository applicationGroupRepository;
         private final ApplicationRepository applicationRepository;
 
@@ -24,7 +26,7 @@ public class ApplicationGroupService {
 
         public ApplicationGroupSimpleResponse createApplicationGroup(Long applicationId, ApplicationGroupRequest req) {
                 Application application = applicationRepository.findById(applicationId)
-                                .orElseThrow(() -> new RuntimeException("Application not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException("Application Not Found"));
 
                 ApplicationGroup group = new ApplicationGroup();
 
@@ -46,14 +48,14 @@ public class ApplicationGroupService {
 
         public ApplicationGroupResponse getApplicationGroupById(Long groupId) {
                 ApplicationGroup group = applicationGroupRepository.findById(groupId)
-                                .orElseThrow(() -> new RuntimeException("Application Group not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException("Application Group Not Found"));
 
                 return applicationGroupMapper.toResponse(group);
         }
 
         public ApplicationGroupSimpleResponse updateApplicationGroup(Long groupId, ApplicationGroupRequest req) {
                 ApplicationGroup group = applicationGroupRepository.findById(groupId)
-                                .orElseThrow(() -> new RuntimeException("Application Group not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException("Application Group Not Found"));
 
                 group.setName(req.getName());
                 group.setDescription(req.getDescription());
@@ -65,7 +67,7 @@ public class ApplicationGroupService {
 
         public String deleteApplicationGroup(Long groupId) {
                 ApplicationGroup applicationGroup = applicationGroupRepository.findById(groupId)
-                                .orElseThrow(() -> new RuntimeException("Application Group not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException("Application Group Not Found"));
 
                 applicationGroupRepository.delete(applicationGroup);
 

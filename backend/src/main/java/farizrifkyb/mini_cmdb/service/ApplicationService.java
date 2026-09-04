@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import farizrifkyb.mini_cmdb.entity.Application;
+import farizrifkyb.mini_cmdb.exception.ResourceNotFoundException;
 import farizrifkyb.mini_cmdb.mapper.ApplicationMapper;
 import farizrifkyb.mini_cmdb.model.request.ApplicationRequest;
 import farizrifkyb.mini_cmdb.model.response.ApplicationResponse;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
+
     private final ApplicationMapper applicationMapper;
 
     public List<ApplicationResponse> getApplications() {
@@ -24,7 +26,8 @@ public class ApplicationService {
     }
 
     public ApplicationResponse getApplicationById(Long id) {
-        Application application = applicationRepository.findById(id).orElseThrow(() -> new RuntimeException("Application not found"));
+        Application application = applicationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Application Not Found"));
         return applicationMapper.toResponse(application);
     }
 
@@ -43,7 +46,7 @@ public class ApplicationService {
 
     public ApplicationSimpleResponse updateApplication(Long id, ApplicationRequest req) {
         Application application = applicationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Application not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Application Not Found"));
 
         application.setName(req.getName());
         application.setEnvironment(req.getEnvironment());
@@ -57,7 +60,7 @@ public class ApplicationService {
 
     public String deleteApplication(Long id) {
         Application application = applicationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Application not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Application Not Found"));
 
         applicationRepository.delete(application);
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import farizrifkyb.mini_cmdb.entity.Ip;
+import farizrifkyb.mini_cmdb.exception.ResourceNotFoundException;
 import farizrifkyb.mini_cmdb.mapper.IpMapper;
 import farizrifkyb.mini_cmdb.model.request.IpRequest;
 import farizrifkyb.mini_cmdb.model.response.ApplicationGroupSimpleResponse;
@@ -40,7 +41,7 @@ public class IpService {
     }
 
     public IpResponse getIpById(Long id) {
-        Ip ip = ipRepository.findById(id).orElseThrow(() -> new RuntimeException("Ip not found"));
+        Ip ip = ipRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("IP Not Found"));
 
         return ipMapper.toResponse(ip);
     }
@@ -63,7 +64,7 @@ public class IpService {
 
     public IpSimpleResponse updateIp(Long ipId, IpRequest req) {
         Ip ip = ipRepository.findById(ipId)
-                .orElseThrow(() -> new RuntimeException("Ip not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("IP Not Found"));
 
         ip.setIpAddress(req.getIpAddress());
         ip.setHostname(req.getHostname());
@@ -76,7 +77,7 @@ public class IpService {
 
     public String deleteIp(Long ipId) {
         Ip ip = ipRepository.findById(ipId)
-                .orElseThrow(() -> new RuntimeException("Ip not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("IP Not Found"));
 
         ipRepository.delete(ip);
 
