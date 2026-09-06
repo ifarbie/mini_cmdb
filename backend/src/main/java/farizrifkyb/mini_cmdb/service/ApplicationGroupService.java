@@ -28,11 +28,7 @@ public class ApplicationGroupService {
                 Application application = applicationRepository.findById(applicationId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Application Not Found"));
 
-                ApplicationGroup group = new ApplicationGroup();
-
-                group.setName(req.getName());
-                group.setDescription(req.getDescription());
-                group.setApplication(application);
+                ApplicationGroup group = applicationGroupMapper.toEntity(application, req);
 
                 applicationGroupRepository.save(group);
 
